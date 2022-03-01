@@ -6,22 +6,37 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 05:11:06 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 07:03:36 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TETRIS_H
 # define TETRIS_H
 
+// ============================ global variable ============================= //
+
+int errno;
+
 // ================================= library ================================ //
 
-# include <ctype.h>
 # include <stdio.h>
+
+# include <ctype.h>
 # include <time.h>
+
+# include <sys/select.h>
+# include <unistd.h>
+# include <errno.h>
+// # include <sys/types.h>
+# include <signal.h>
+# include <stdlib.h>
+// # include <termios.h>
+# include <term.h>
+
 
 // ================================== macro ================================= //
 
-# define clear_screen()				printf("\033[2J")
+# define clear_field()				printf("\033[2J")
 # define set_position(y, x)			printf("\033[%d;%dH", (y)+1, (x)*2+1)
 # define set_char_color(n)			printf("\033[3%dm", (n))
 # define set_back_color(n)			printf("\033[4%dm", (n))
@@ -79,14 +94,21 @@ typedef struct	s_vars
 	t_cell	block_type[BLOCK_NUM][BLOCK_SIZE][BLOCK_SIZE];
 	t_cell	field[FLD_HEIGHT][FLD_WIDTH];
 	t_cell	block[BLOCK_SIZE][BLOCK_SIZE];
+	struct termios	otty;
+	struct termios	ntty;	
 }				t_vars;
 
 // ========================= prototype declaration ========================== //
 
 int wait(int msec);
 
-void	init_screen(void);
-void	reset_screen(void);
+int     kbhit(void);
+int     getch(void);
+int     tinit(t_vars *v);
+int		tfinal(t_vars *v);
+
+void	init_screen(t_vars *v);
+void	reset_screen(t_vars *v);
 
 void	init_vars(t_vars *v);
 
