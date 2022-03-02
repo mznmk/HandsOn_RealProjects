@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 03:02:43 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 12:47:42 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int check_range(t_cell cell, int y, int x)
 {
-	if (iscntrl(cell.c))
+	if (cell.c == '\0')
 		return -1;
 	if ((0 <= y && y < FLD_HEIGHT) && (0 <= x && x < FLD_WIDTH))
 		return 0;

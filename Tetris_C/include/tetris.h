@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 12:16:09 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 13:37:59 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ struct termios	ntty;
 // ================================= library ================================ //
 
 # include <stdio.h>
-
-# include <ctype.h>
-# include <time.h>
-
 # include <sys/select.h>
 # include <unistd.h>
 # include <errno.h>
@@ -34,7 +30,8 @@ struct termios	ntty;
 # include <stdlib.h>
 // # include <termios.h>
 # include <term.h>
-
+// # include <time.h>
+# include <sys/time.h>
 
 // ================================== macro ================================= //
 
@@ -52,6 +49,7 @@ struct termios	ntty;
 # define FLD_HEIGHT					30
 # define BLOCK_SIZE					4
 # define BLOCK_NUM					7
+# define LOOP_DURATION				0.5
 
 // ---------------------------------- key ----------------------------------- //
 
@@ -65,11 +63,6 @@ struct termios	ntty;
 #define KEY_ARROW_DOWN				0x425B1B
 #define KEY_ARROW_RIGHT				0x435B1B
 #define KEY_ARROW_LEFT				0x445B1B
-
-// #define KEY_ARROW_UP				0x7fff77415b1bUL
-// #define KEY_ARROW_DOWN				0x7ffeeb425b1bUL
-// #define KEY_ARROW_RIGHT				0x7ffc37435b1bUL
-// #define KEY_ARROW_LEFT				0x7ffe61445b1bUL
 
 #define KEY_HOME					0x485B1B
 #define KEY_END						0x465B1B
@@ -114,30 +107,40 @@ typedef struct		s_vars
 	t_cell			block_type[BLOCK_NUM][BLOCK_SIZE][BLOCK_SIZE];
 	t_cell			field[FLD_HEIGHT][FLD_WIDTH];
 	t_cell			block[BLOCK_SIZE][BLOCK_SIZE];
-	// struct termios	otty;
-	// struct termios	ntty;	
+	double			duration;
+	struct timeval	start_time;
+	struct timeval	prev_time;
+	struct timeval	now_time;	
 }					t_vars;
 
 // ========================= prototype declaration ========================== //
 
-int				exit_tetris(void);
-int				wait(int msec);
+// init.c
+void			init_vars(t_vars *v);
 
+// time.c
+
+// int				wait(int msec);
+
+// io.c
 int				kbhit(void);
 unsigned long	getch(void);
 int				tinit(void);
 int				tfinal(void);
 
+// screen.c
 void			init_screen(void);
 void			reset_screen(void);
 
-void			init_vars(t_vars *v);
-
+// block.c
 int				check_range(t_cell cell, int y, int x);
 int				print_cell(t_cell cell, int y, int x);
 int				clear_cell(t_cell cell, int y, int x);
 int				print_block(t_vars *v, int y, int x);
 int				clear_block(t_vars *v, int y, int x);
 void			copy_block(t_vars *v, t_cell src[BLOCK_SIZE][BLOCK_SIZE]);
+
+// main.c
+int				exit_tetris(void);
 
 #endif

@@ -6,14 +6,14 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 00:20:27 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 13:08:08 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/tetris.h"
 
-int wait(int msec)
-{
-	struct timespec r = {0, msec * 1000L * 1000L};
-	return nanosleep(&r, NULL);
-}
+// int wait(int msec)
+// {
+// 	struct timespec r = {0, msec * 1000L * 1000L};
+// 	return nanosleep(&r, NULL);
+// }

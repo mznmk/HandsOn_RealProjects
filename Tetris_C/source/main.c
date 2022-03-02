@@ -6,14 +6,76 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 12:18:03 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 13:38:05 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/tetris.h"
 
 /*!
-** @brief	exit tetris (other exit ponint)
+** @brief	game loop (tetris game loop)
+** @param	v		tetris variables (structure)
+** @return	status
+*/
+static void	game_loop(t_vars *v)
+{
+	int now_y = 0;
+	int now_x = 10;
+	int prev_y, prev_x;
+	unsigned long	keycode;
+
+	copy_block(v, v->block_type[1]);
+
+	print_block(v, now_y, now_x);
+
+	gettimeofday(&v->prev_time, NULL);	// set prev_time
+
+	for ( ; now_y < FLD_HEIGHT; )
+	// while (42)
+	{
+		prev_y = now_y;
+		prev_x = now_x;
+		
+		// recieved keycode from stdin ?
+		if (kbhit())
+		{
+			clear_block(v, now_y, now_x);
+			keycode = getch();
+// set_char_color(CLR_WHITE);
+// printf("%lx\n", keycode);
+// set_char_color(CLR_DEFAULT);
+			if (keycode == KEY_ARROW_UP)
+				now_y--;
+			else if (keycode == KEY_ARROW_DOWN)
+				now_y++;
+			else if (keycode == KEY_ARROW_LEFT)
+				now_x--;
+			else if (keycode == KEY_ARROW_RIGHT)
+				now_x++;
+			else
+				exit_tetris();
+		}
+		// measuring time ...
+		gettimeofday(&v->now_time, NULL);
+		v->duration = (v->now_time.tv_sec - v->prev_time.tv_sec)
+				+ (v->now_time.tv_usec - v->prev_time.tv_usec) / 1000000.0;
+		// gravity fall block
+		if (LOOP_DURATION < v->duration)
+		{
+			v->prev_time = v->now_time;
+			now_y++;
+		}
+		// move block
+		if (prev_y != now_y || prev_x != now_x)
+		{
+			clear_block(v, prev_y, prev_x);
+			print_block(v, now_y, now_x);
+		}
+	}
+}
+
+/*!
+** @brief	exit tetris (other exit point)
 ** @return	status
 */
 int		exit_tetris(void)
@@ -32,45 +94,11 @@ int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-
 	t_vars	v;
 
 	init_vars(&v);
-	copy_block(&v, v.block_type[1]);
-	
 	init_screen();
-	int count;
-	int i = 5;
-	int j = 10;
-	unsigned long	keycode;
-	print_block(&v, i, j);
-	for (count = 0; i < 10; )
-	// while (42)
-	{
-		if (kbhit())
-		{
-			clear_block(&v, i, j);
-			keycode = getch();
-// set_char_color(CLR_WHITE);
-// printf("%lx\n", keycode);
-// set_char_color(CLR_DEFAULT);
-			if (keycode == KEY_ARROW_UP)
-				i--;
-			else if (keycode == KEY_ARROW_DOWN)
-				i++;
-			else if (keycode == KEY_ARROW_LEFT)
-				j--;
-			else if (keycode == KEY_ARROW_RIGHT)
-				j++;
-			else
-			{
-				reset_screen();
-				exit(1);
-			}
-			count++;
-			print_block(&v, i, j);
-		}
-	}
+	game_loop(&v);
 	reset_screen();
 
 	return 0;
