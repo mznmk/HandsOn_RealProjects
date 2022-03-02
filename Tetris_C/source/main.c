@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/03 05:19:30 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/03 07:12:43 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ static void	game_loop(t_vars *v)
 	unsigned long	keycode;
 
 	// [ set parameter ]
+	v->score = 0;
 	v->prev_y = 0;
 	v->prev_x = 0;
 	v->now_y = START_YCOORD;
 	v->now_x = START_XCOORD;
-	v->next_y = START_YCOORD;
-	v->next_x = GRID_WIDTH + 1;
 
 	// [ draw game screen ]
 	// create next block
@@ -39,6 +38,7 @@ static void	game_loop(t_vars *v)
 	rnd_next = rand() % BLOCK_NUM;
 	set_block_next(v, rnd_next);
 	print_block_next(v);
+	draw_score(v);
 
 	// measuring time
 	gettimeofday(&v->prev_time, NULL);	// set prev_time
@@ -49,48 +49,54 @@ static void	game_loop(t_vars *v)
 		v->prev_y = v->now_y;
 		v->prev_x = v->now_x;
 		
-		// recieved keycode from stdin ?
+		// [ recieved keycode from stdin ? ]
 		if (kbhit())
 		{
 			clear_block_now(v);
+
+			// what keycode recieved ?
 			keycode = getch();
-// set_char_color(CLR_WHITE);
-// printf("%lx\n", keycode);
-// set_char_color(CLR_DEFAULT);
 			if (keycode == KEY_ARROW_UP || keycode == 'w' ||
 				keycode == '0' || keycode == ',')
+			{
+				// rotate block to left
 				rotate_block(v, v->now_y, v->now_x, false);
+			}
 			else if (keycode == '.')
+			{
+				// rotate block to right
 				rotate_block(v, v->now_y, v->now_x, true);
+			}
 			else if (keycode == KEY_ARROW_DOWN || keycode == 's')
 			{
+				// move cell to bottom
 				while (check_grid(v, v->now_y + 1, v->now_x) == 0)
 					v->now_y++;
+				// update score (drop point)
+				v->score += v->now_y - v->prev_y;
+				draw_score(v);
 			}
 			else if (keycode == KEY_ARROW_LEFT || keycode == 'a')
 			{
+				// move cell to left
 				if (check_grid(v, v->now_y, v->now_x - 1) == 0)
 					v->now_x--;
 			}
 			else if (keycode == KEY_ARROW_RIGHT || keycode == 'd')
 			{
+				// move cell to right
 				if (check_grid(v, v->now_y, v->now_x + 1) == 0)
 					v->now_x++;
 			}
-			// else
-			// {
-			// 	now_y = START_YCOORD;
-			// 	now_x = START_XCOORD;
-			// }
 		}
+		// [ block fell regularly by gravity :) ]
 		// measuring time ...
 		gettimeofday(&v->now_time, NULL);
 		v->duration = (v->now_time.tv_sec - v->prev_time.tv_sec)
 				+ (v->now_time.tv_usec - v->prev_time.tv_usec) / 1000000.0;
-		// gravity fall block
+		// fell regularly
 		if (LOOP_DURATION < v->duration)
 		{
-			// if (now_y < GRID_HEIGHT)
 			if (check_grid(v, v->now_y + 1, v->now_x) == 0)
 				v->now_y++;
 			else
@@ -100,8 +106,8 @@ static void	game_loop(t_vars *v)
 					exit_tetris();
 				// fix block !
 				put_grid(v, v->now_y, v->now_x);
-				// delete lines
-				deleteGrid(v);
+				// erase lines
+				erase_lines(v);
 				// create next block
 				v->now_y = START_YCOORD;
 				v->now_x = START_XCOORD;
@@ -117,7 +123,8 @@ static void	game_loop(t_vars *v)
 			}
 			v->prev_time = v->now_time;
 		}
-		// move block
+
+		// [ block moved ? -> redraw block ]
 		if (v->prev_y != v->now_y || v->prev_x != v->now_x)
 		{
 			// redraw block

@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/03 05:15:58 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/03 07:12:35 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,20 @@ struct termios	ntty;
 # define GRID_HEIGHT				20
 # define BLOCK_SIZE					4
 # define BLOCK_NUM					7
-# define LOOP_DURATION				0.5
 # define START_YCOORD				0
 # define START_XCOORD				GRID_WIDTH/2 - 1
+# define NEXT_YCOORD				START_YCOORD
+# define NEXT_XCOORD				GRID_WIDTH + 1
+# define SCORE_YCOORD				BLOCK_SIZE + 1
+# define SCORE_XCOORD				GRID_WIDTH + 1
+# define LOOP_DURATION				0.5
 
-// ---------------------------------- key ----------------------------------- //
+// --------------------------------- score ---------------------------------- //
 
-# define KEY_ARROW_UP				0x415B1B
-# define KEY_ARROW_DOWN				0x425B1B
-# define KEY_ARROW_RIGHT			0x435B1B
-# define KEY_ARROW_LEFT				0x445B1B
-
-# define KEY_SPACE					0x20
-
-# define KEY_EOT					0x4
-# define KEY_RETURN					0xA
-
-# define KEY_BACKSPACE				0x7F
-# define KEY_DELETE					0x7E335B1B
-
-# define KEY_HOME					0x485B1B
-# define KEY_END					0x465B1B
+# define ERASE_1LINE				40
+# define ERASE_2LINE				100
+# define ERASE_3LINE				300
+# define ERASE_4LINE				1200
 
 // --------------------------------- color ---------------------------------- //
 
@@ -95,6 +88,24 @@ struct termios	ntty;
 # define ATR_HIDE					8
 # define ATR_STRIKE					9
 
+// ---------------------------------- key ----------------------------------- //
+
+# define KEY_ARROW_UP				0x415B1B
+# define KEY_ARROW_DOWN				0x425B1B
+# define KEY_ARROW_RIGHT			0x435B1B
+# define KEY_ARROW_LEFT				0x445B1B
+
+# define KEY_SPACE					0x20
+
+# define KEY_EOT					0x4
+# define KEY_RETURN					0xA
+
+# define KEY_BACKSPACE				0x7F
+# define KEY_DELETE					0x7E335B1B
+
+# define KEY_HOME					0x485B1B
+# define KEY_END					0x465B1B
+
 // ================================= struct ================================= //
 
 typedef struct		s_cell
@@ -104,8 +115,6 @@ typedef struct		s_cell
 	int				back_color;
 	int				attribute;
 }					t_cell;
-
-// --------------------------------- struct --------------------------------- //
 
 typedef struct		s_vars
 {
@@ -117,8 +126,7 @@ typedef struct		s_vars
 	int				now_y;
 	int				now_x;
 	t_cell			block_next[BLOCK_SIZE][BLOCK_SIZE];
-	int				next_y;
-	int				next_x;
+	int				score;
 	double			duration;
 	struct timeval	start_time;
 	struct timeval	prev_time;
@@ -143,6 +151,7 @@ int				tfinal(void);
 // screen.c
 void			init_screen(void);
 void			reset_screen(void);
+void			draw_score(t_vars *v);
 
 // block.c
 int				print_cell(t_cell cell, int y, int x);
@@ -158,7 +167,7 @@ void			rotate_block(t_vars *v, int y, int x, bool turn_right);
 
 int				check_grid(t_vars *v, int y, int x);
 void			put_grid(t_vars *v, int y, int x);
-void			deleteGrid(t_vars *v);
+void			erase_lines(t_vars *v);
 
 // main.c
 int				exit_tetris(void);
