@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 23:56:19 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/03 02:39:25 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static void	game_loop(t_vars *v)
 					exit_tetris();
 				// fix block !
 				put_grid(v, now_y, now_x);
+				// delete lines
+				deleteGrid(v);
 				// create next block
 				now_y = START_YCOORD;
 				now_x = START_XCOORD;
@@ -118,7 +120,10 @@ static void	game_loop(t_vars *v)
 */
 int		exit_tetris(void)
 {
+	// [ finalize tetris ]
 	reset_screen();
+
+	// [ return (exit point) ]
 	exit(0);
 }
 
@@ -130,14 +135,20 @@ int		exit_tetris(void)
 */
 int	main(int argc, char **argv)
 {
+	// [ variables ]
 	(void)argc;
 	(void)argv;
 	t_vars	v;
 
+	// [ execute tetris ]
+	// initialize tetris
 	init_vars(&v);
 	init_screen();
+	// execute tetris
 	game_loop(&v);
+	// finalize tetris
 	reset_screen();
 
+	// [ return ]
 	return 0;
 }

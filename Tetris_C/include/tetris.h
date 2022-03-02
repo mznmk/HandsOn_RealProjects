@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 18:32:40 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/03 02:37:23 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void			rotate_block(t_vars *v, int y, int x, bool turn_right);
 
 int				check_grid(t_vars *v, int y, int x);
 void			put_grid(t_vars *v, int y, int x);
+void			deleteGrid(t_vars *v);
 
 // main.c
 int				exit_tetris(void);

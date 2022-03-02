@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 19:29:58 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/03 02:41:34 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,50 @@ void		put_grid(t_vars *v, int y, int x)
 		if (check_cell(v, v->block[i][j], y + i, x + j) == 0)
 			v->grid[y+i][x+j] = v->block[i][j];
 
+	return;
+}
+
+
+static void		print_grid(t_vars *v)
+{
+	// draw screen
+	for (int i = 0; i < GRID_HEIGHT; i++)
+		for (int j = 0; j < GRID_WIDTH; j++)
+			print_cell(v->grid[i][j], i, j);
+	// [ return ;]
+	return;
+}
+
+static int		check_line(t_vars *v, int y)
+{
+	// all cells filled in line ?
+	for (int j = 0; j < GRID_WIDTH; j++)
+		if (v->grid[y][j].c == '\0')	// fail ?
+			return -1;
+	// return
+	return 0;
+}
+
+static void		deleteLine(t_vars *v, int y)
+{
+	// move line from bottom to top
+	for (int i = y; i > 0; i--)
+		for (int j = 0; j < GRID_WIDTH; j++)
+			v->grid[i][j] = v->grid[i-1][j];
+	// redraw screen
+	set_back_color(CLR_BLACK);
+	clear_board();
+	print_grid(v);
+	// return
+	return;
+}
+
+void			deleteGrid(t_vars *v)
+{
+	// need to delete line ?
+	for (int i = 0; i < GRID_HEIGHT; i++)
+		if (check_line(v, i) == 0)
+			deleteLine(v, i);
+	// return
 	return;
 }
