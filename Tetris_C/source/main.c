@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 14:36:37 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 15:09:18 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,22 @@
 */
 static void	game_loop(t_vars *v)
 {
-	int now_y = 0;
-	int now_x = 10;
+	int now_y = START_YCOORD;
+	int now_x = START_XCOORD;
 	int prev_y, prev_x;
+	int rnd;
 	unsigned long	keycode;
 
-	copy_block(v, v->block_type[1]);
-
+	// draw game screen
+	rnd = rand() % BLOCK_NUM;
+	copy_block(v, v->block_type[rnd]);
 	print_block(v, now_y, now_x);
 
+	// measuring time
 	gettimeofday(&v->prev_time, NULL);	// set prev_time
 
-	for ( ; now_y < FLD_HEIGHT; )
-	// while (42)
+	// run game main routine
+	while (42)
 	{
 		prev_y = now_y;
 		prev_x = now_x;
@@ -44,13 +47,16 @@ static void	game_loop(t_vars *v)
 // set_char_color(CLR_WHITE);
 // printf("%lx\n", keycode);
 // set_char_color(CLR_DEFAULT);
-			if (keycode == KEY_ARROW_UP)
+			if (keycode == KEY_ARROW_UP || keycode == 'w' ||
+				keycode == '0' || keycode == ',')
+				rotate_block(v, now_y, now_x, false);
+			else if (keycode == '.')
 				rotate_block(v, now_y, now_x, true);
-			else if (keycode == KEY_ARROW_DOWN)
+			else if (keycode == KEY_ARROW_DOWN || keycode == 's')
 				now_y++;
-			else if (keycode == KEY_ARROW_LEFT)
+			else if (keycode == KEY_ARROW_LEFT || keycode == 'a')
 				now_x--;
-			else if (keycode == KEY_ARROW_RIGHT)
+			else if (keycode == KEY_ARROW_RIGHT || keycode == 'd')
 				now_x++;
 			else
 			{
@@ -66,11 +72,21 @@ static void	game_loop(t_vars *v)
 		if (LOOP_DURATION < v->duration)
 		{
 			v->prev_time = v->now_time;
-			now_y++;
+			if (now_y < FLD_HEIGHT)
+				now_y++;
+			else
+			{
+				// create next block
+				now_y = START_YCOORD;
+				now_x = START_XCOORD;
+				rnd = rand() % BLOCK_NUM;
+				copy_block(v, v->block_type[rnd]);
+			}
 		}
 		// move block
 		if (prev_y != now_y || prev_x != now_x)
 		{
+			// redraw block
 			clear_block(v, prev_y, prev_x);
 			print_block(v, now_y, now_x);
 		}

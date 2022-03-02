@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 14:36:11 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 14:55:50 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,21 @@ struct termios	ntty;
 
 // ---------------------------------- key ----------------------------------- //
 
-#define KEY_EOT						0x4
-#define KEY_RETURN					0xA
+# define KEY_ARROW_UP				0x415B1B
+# define KEY_ARROW_DOWN				0x425B1B
+# define KEY_ARROW_RIGHT			0x435B1B
+# define KEY_ARROW_LEFT				0x445B1B
 
-#define KEY_BACKSPACE				0x7F
-#define KEY_DELETE					0x7E335B1B
+# define KEY_SPACE					0x20
 
-#define KEY_ARROW_UP				0x415B1B
-#define KEY_ARROW_DOWN				0x425B1B
-#define KEY_ARROW_RIGHT				0x435B1B
-#define KEY_ARROW_LEFT				0x445B1B
+# define KEY_EOT					0x4
+# define KEY_RETURN					0xA
 
-#define KEY_HOME					0x485B1B
-#define KEY_END						0x465B1B
+# define KEY_BACKSPACE				0x7F
+# define KEY_DELETE					0x7E335B1B
+
+# define KEY_HOME					0x485B1B
+# define KEY_END					0x465B1B
 
 // --------------------------------- color ---------------------------------- //
 
