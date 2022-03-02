@@ -6,13 +6,13 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 03:59:19 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 04:51:46 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 12:21:26 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/tetris.h"
 
-void	init_block_type(t_vars *v) 
+static void	init_block_type(t_vars *v) 
 {
 	for (int i = 0; i < BLOCK_NUM; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
@@ -52,7 +52,8 @@ void	init_block_type(t_vars *v)
 	return;
 }
 
-void	set_block_type_helper(t_vars *v, int n, int y[BLOCK_SIZE], int x[BLOCK_SIZE])
+static void	set_block_type_helper(t_vars *v, int n,
+									int y[BLOCK_SIZE], int x[BLOCK_SIZE])
 {
 	for (int i = 0; i < BLOCK_SIZE; i++)
 	{
@@ -62,7 +63,7 @@ void	set_block_type_helper(t_vars *v, int n, int y[BLOCK_SIZE], int x[BLOCK_SIZE
 	return;
 }
 
-void	set_block_type(t_vars *v)
+static void	set_block_type(t_vars *v)
 {
 	int y[BLOCK_SIZE];
 	int x[BLOCK_SIZE];
@@ -141,7 +142,7 @@ void	set_block_type(t_vars *v)
 	return;
 }
 
-void	init_vars_block(t_vars *v) 
+static void	init_vars_block(t_vars *v) 
 {
 	init_block_type(v);
 	set_block_type(v);
@@ -153,7 +154,7 @@ void	init_vars_block(t_vars *v)
 ** @param	v			tetris variables (structure)
 ** @return	none
 */
-void	init_vars(t_vars *v)
+void		init_vars(t_vars *v)
 {
 	init_vars_block(v);
 	return;

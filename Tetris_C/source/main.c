@@ -6,11 +6,21 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 07:43:18 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 12:18:03 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/tetris.h"
+
+/*!
+** @brief	exit tetris (other exit ponint)
+** @return	status
+*/
+int		exit_tetris(void)
+{
+	reset_screen();
+	return 0;
+}
 
 /*!
 ** @brief	main (tetris entry point)
@@ -18,31 +28,6 @@
 ** @param	argv	argument contents
 ** @return	status
 */
-// int	main(int argc, char **argv)
-// {
-// 	(void)argc;
-// 	(void)argv;
-
-// 	t_vars	v;
-
-// 	init_vars(&v);
-
-// 	copy_block(&v, v.block_type[6]);
-
-// 	init_screen(&v);
-// 	int y = 0;
-// 	int x = 10;
-// 	for (y = 1; y < 25; y++)
-// 	{
-// 		print_block(&v, y, x + y%3);
-// 		wait(500);
-// 		clear_block(&v, y, x + y%3);
-// 	}
-// 	reset_screen(&v);
-
-// 	return 0;
-// }
-
 int	main(int argc, char **argv)
 {
 	(void)argc;
@@ -51,22 +36,42 @@ int	main(int argc, char **argv)
 	t_vars	v;
 
 	init_vars(&v);
-	copy_block(&v, v.block_type[6]);
+	copy_block(&v, v.block_type[1]);
 	
-	init_screen(&v);
-	int c;
-	for (int i = 1; i < 10; )
+	init_screen();
+	int count;
+	int i = 5;
+	int j = 10;
+	unsigned long	keycode;
+	print_block(&v, i, j);
+	for (count = 0; i < 10; )
+	// while (42)
 	{
-		if (kbhit() != 0)
+		if (kbhit())
 		{
-			print_block(&v, i, i);
-			c = getch();
-			printf("%x", c);
-			clear_block(&v, i, i);
-			i++;
+			clear_block(&v, i, j);
+			keycode = getch();
+// set_char_color(CLR_WHITE);
+// printf("%lx\n", keycode);
+// set_char_color(CLR_DEFAULT);
+			if (keycode == KEY_ARROW_UP)
+				i--;
+			else if (keycode == KEY_ARROW_DOWN)
+				i++;
+			else if (keycode == KEY_ARROW_LEFT)
+				j--;
+			else if (keycode == KEY_ARROW_RIGHT)
+				j++;
+			else
+			{
+				reset_screen();
+				exit(1);
+			}
+			count++;
+			print_block(&v, i, j);
 		}
 	}
-	reset_screen(&v);
+	reset_screen();
 
 	return 0;
 }

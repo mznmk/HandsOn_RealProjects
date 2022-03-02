@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 07:03:36 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 12:16:09 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 // ============================ global variable ============================= //
 
-int errno;
+int				errno;
+struct termios	otty;
+struct termios	ntty;	
 
 // ================================= library ================================ //
 
@@ -51,8 +53,26 @@ int errno;
 # define BLOCK_SIZE					4
 # define BLOCK_NUM					7
 
-// -------------------------------- message --------------------------------- //
+// ---------------------------------- key ----------------------------------- //
 
+#define KEY_EOT						0x4
+#define KEY_RETURN					0xA
+
+#define KEY_BACKSPACE				0x7F
+#define KEY_DELETE					0x7E335B1B
+
+#define KEY_ARROW_UP				0x415B1B
+#define KEY_ARROW_DOWN				0x425B1B
+#define KEY_ARROW_RIGHT				0x435B1B
+#define KEY_ARROW_LEFT				0x445B1B
+
+// #define KEY_ARROW_UP				0x7fff77415b1bUL
+// #define KEY_ARROW_DOWN				0x7ffeeb425b1bUL
+// #define KEY_ARROW_RIGHT				0x7ffc37435b1bUL
+// #define KEY_ARROW_LEFT				0x7ffe61445b1bUL
+
+#define KEY_HOME					0x485B1B
+#define KEY_END						0x465B1B
 
 // --------------------------------- color ---------------------------------- //
 
@@ -79,44 +99,45 @@ int errno;
 
 // ================================= struct ================================= //
 
-typedef struct	s_cell
+typedef struct		s_cell
 {
-	char	c;
-	int		char_color;
-	int		back_color;
-	int		attribute;
-}				t_cell;
+	char			c;
+	int				char_color;
+	int				back_color;
+	int				attribute;
+}					t_cell;
 
 // --------------------------------- struct --------------------------------- //
 
-typedef struct	s_vars
+typedef struct		s_vars
 {
-	t_cell	block_type[BLOCK_NUM][BLOCK_SIZE][BLOCK_SIZE];
-	t_cell	field[FLD_HEIGHT][FLD_WIDTH];
-	t_cell	block[BLOCK_SIZE][BLOCK_SIZE];
-	struct termios	otty;
-	struct termios	ntty;	
-}				t_vars;
+	t_cell			block_type[BLOCK_NUM][BLOCK_SIZE][BLOCK_SIZE];
+	t_cell			field[FLD_HEIGHT][FLD_WIDTH];
+	t_cell			block[BLOCK_SIZE][BLOCK_SIZE];
+	// struct termios	otty;
+	// struct termios	ntty;	
+}					t_vars;
 
 // ========================= prototype declaration ========================== //
 
-int wait(int msec);
+int				exit_tetris(void);
+int				wait(int msec);
 
-int     kbhit(void);
-int     getch(void);
-int     tinit(t_vars *v);
-int		tfinal(t_vars *v);
+int				kbhit(void);
+unsigned long	getch(void);
+int				tinit(void);
+int				tfinal(void);
 
-void	init_screen(t_vars *v);
-void	reset_screen(t_vars *v);
+void			init_screen(void);
+void			reset_screen(void);
 
-void	init_vars(t_vars *v);
+void			init_vars(t_vars *v);
 
-int check_range(t_cell cell, int y, int x);
-int	print_cell(t_cell cell, int y, int x);
-int	clear_cell(t_cell cell, int y, int x);
-int		print_block(t_vars *v, int y, int x);
-int		clear_block(t_vars *v, int y, int x);
-void	copy_block(t_vars *v, t_cell src[BLOCK_SIZE][BLOCK_SIZE]);
+int				check_range(t_cell cell, int y, int x);
+int				print_cell(t_cell cell, int y, int x);
+int				clear_cell(t_cell cell, int y, int x);
+int				print_block(t_vars *v, int y, int x);
+int				clear_block(t_vars *v, int y, int x);
+void			copy_block(t_vars *v, t_cell src[BLOCK_SIZE][BLOCK_SIZE]);
 
 #endif

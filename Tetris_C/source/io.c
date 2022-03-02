@@ -6,13 +6,15 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 04:59:20 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 07:13:46 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 12:09:19 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/tetris.h"
 
-extern int errno;
+extern int				errno;
+extern struct termios	otty;
+extern struct termios	ntty;
 
 int     kbhit(void)
 {
@@ -27,16 +29,23 @@ int     kbhit(void)
 		return 0;
 }
 
-int     getch(void)
+unsigned long	getch(void)
 {
-	unsigned char   c;
-	int             n;
-	while ((n = read(0, &c, 1)) < 0 && errno == EINTR)
-		;
-	if (n == 0)
+	unsigned long   keycode;
+	int             rtn;
+	// while ((rtn = read(0, &keycode, 8)) < 0 && errno == EINTR)
+	// 	;
+	while (42)
+	{
+		keycode = 0UL;
+		rtn = read(0, &keycode, 8);
+		if (!(rtn < 0 && errno == EINTR))
+			break;
+	} 
+	if (rtn == 0)
 		return -1;
 	else
-		return (int)c;
+		return keycode;
 }
 
 static void    onsignal(int sig)
@@ -54,17 +63,17 @@ static void    onsignal(int sig)
 	return;
 }
 
-int     tinit(t_vars *v)
+int     tinit(void)
 {
-	if(tcgetattr(1, &v->otty) < 0)
+	if(tcgetattr(1, &otty) < 0)
 		return -1;
-	v->ntty = v->otty;
-	v->ntty.c_iflag &= ~(INLCR|ICRNL|IXON|IXOFF|ISTRIP);
-	v->ntty.c_oflag &= ~OPOST;
-	v->ntty.c_lflag &= ~(ICANON|ECHO);
-	v->ntty.c_cc[VMIN] = 1;
-	v->ntty.c_cc[VTIME] = 0;
-	tcsetattr(1, TCSADRAIN, &v->ntty);
+	ntty = otty;
+	ntty.c_iflag &= ~(INLCR|ICRNL|IXON|IXOFF|ISTRIP);
+	ntty.c_oflag &= ~OPOST;
+	ntty.c_lflag &= ~(ICANON|ECHO);
+	ntty.c_cc[VMIN] = 1;
+	ntty.c_cc[VTIME] = 0;
+	tcsetattr(1, TCSADRAIN, &ntty);
 	signal(SIGINT, onsignal);
 	signal(SIGQUIT, onsignal);
 	signal(SIGTERM, onsignal);
@@ -72,9 +81,9 @@ int     tinit(t_vars *v)
 	return 0;
 }
 
-int		tfinal(t_vars *v)
+int		tfinal(void)
 {
-	tcsetattr(1, TCSADRAIN, &v->otty);
+	tcsetattr(1, TCSADRAIN, &otty);
 	write(1, "\n", 1);
 	return 0;
 }
