@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:07:13 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 12:13:02 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 16:25:24 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_screen(void)
 	set_back_color(CLR_BLACK);
 	set_char_color(CLR_WHITE);
 	set_attribute(ATR_NORMAL);
-	clear_field();
+	clear_board();
 	cursol_off();
 	return;
 }
@@ -28,7 +28,7 @@ void	reset_screen(void)
 	set_back_color(CLR_BLACK);
 	set_char_color(CLR_WHITE);
 	set_attribute(ATR_NORMAL);
-	clear_field();
+	clear_board();
 	cursol_on();
 	tfinal();
 	return;

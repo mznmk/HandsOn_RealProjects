@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 03:59:19 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 12:21:26 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 16:28:05 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ static void	init_block_type(t_vars *v)
 		for (int j = 0; j < BLOCK_SIZE; j++)
 			for (int k = 0; k < BLOCK_SIZE; k++)
 			{
+				// c
 				v->block_type[i][j][k].c = '\0';
+				// char_color
 				switch (i)
 				{
 					case 0:
@@ -46,7 +48,9 @@ static void	init_block_type(t_vars *v)
 						v->block_type[i][j][k].char_color = CLR_BLACK;
 						break;
 				}
+				// back_color
 				v->block_type[i][j][k].back_color = CLR_BLACK;
+				// attribute
 				v->block_type[i][j][k].attribute = ATR_NORMAL;
 			}
 	return;
@@ -57,7 +61,9 @@ static void	set_block_type_helper(t_vars *v, int n,
 {
 	for (int i = 0; i < BLOCK_SIZE; i++)
 	{
+		// c
 		v->block_type[n][y[i]][x[i]].c = ' ';
+		// attribute
 		v->block_type[n][y[i]][x[i]].attribute = ATR_REVERSE;
 	}
 	return;
@@ -142,10 +148,36 @@ static void	set_block_type(t_vars *v)
 	return;
 }
 
-static void	init_vars_block(t_vars *v) 
+/*!
+** @brief	initialize data container (block_type)
+** @param	v			tetris variables (structure)
+** @return	none
+*/
+static void	init_vars_block_type(t_vars *v) 
 {
 	init_block_type(v);
 	set_block_type(v);
+	return;
+}
+
+/*!
+** @brief	initialize data container (grid)
+** @param	v			tetris variables (structure)
+** @return	none
+*/
+static void	init_vars_grid(t_vars *v)
+{
+	// t_cell	templete = {'\0', CLR_BLACK, CLR_BLACK, ATR_NORMAL};
+	t_cell	templete;
+	templete.c = '\0';
+	templete.char_color = CLR_BLACK;
+	templete.back_color = CLR_BLACK;
+	templete.attribute = ATR_NORMAL;
+	
+	for (int i = 0; i < GRID_HEIGHT; i++)
+		for (int j = 0; j < GRID_WIDTH; j++)
+			v->grid[i][j] = templete;
+
 	return;
 }
 
@@ -156,6 +188,7 @@ static void	init_vars_block(t_vars *v)
 */
 void		init_vars(t_vars *v)
 {
-	init_vars_block(v);
+	init_vars_block_type(v);
+	init_vars_grid(v);
 	return;
 }

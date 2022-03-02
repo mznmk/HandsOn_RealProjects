@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 15:09:18 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 23:56:19 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	game_loop(t_vars *v)
 	unsigned long	keycode;
 
 	// draw game screen
+	// create next block
 	rnd = rand() % BLOCK_NUM;
 	copy_block(v, v->block_type[rnd]);
 	print_block(v, now_y, now_x);
@@ -53,16 +54,25 @@ static void	game_loop(t_vars *v)
 			else if (keycode == '.')
 				rotate_block(v, now_y, now_x, true);
 			else if (keycode == KEY_ARROW_DOWN || keycode == 's')
-				now_y++;
-			else if (keycode == KEY_ARROW_LEFT || keycode == 'a')
-				now_x--;
-			else if (keycode == KEY_ARROW_RIGHT || keycode == 'd')
-				now_x++;
-			else
 			{
-				now_y = START_YCOORD;
-				now_x = START_XCOORD;
+				while (check_grid(v, now_y + 1, now_x) == 0)
+					now_y++;
 			}
+			else if (keycode == KEY_ARROW_LEFT || keycode == 'a')
+			{
+				if (check_grid(v, now_y, now_x - 1) == 0)
+					now_x--;
+			}
+			else if (keycode == KEY_ARROW_RIGHT || keycode == 'd')
+			{
+				if (check_grid(v, now_y, now_x + 1) == 0)
+					now_x++;
+			}
+			// else
+			// {
+			// 	now_y = START_YCOORD;
+			// 	now_x = START_XCOORD;
+			// }
 		}
 		// measuring time ...
 		gettimeofday(&v->now_time, NULL);
@@ -71,17 +81,26 @@ static void	game_loop(t_vars *v)
 		// gravity fall block
 		if (LOOP_DURATION < v->duration)
 		{
-			v->prev_time = v->now_time;
-			if (now_y < FLD_HEIGHT)
+			// if (now_y < GRID_HEIGHT)
+			if (check_grid(v, now_y + 1, now_x) == 0)
 				now_y++;
 			else
 			{
+				// game over ?
+				if (now_y == 0)
+					exit_tetris();
+				// fix block !
+				put_grid(v, now_y, now_x);
 				// create next block
 				now_y = START_YCOORD;
 				now_x = START_XCOORD;
+				prev_y = START_YCOORD;
+				prev_x = START_XCOORD;
 				rnd = rand() % BLOCK_NUM;
 				copy_block(v, v->block_type[rnd]);
+				print_block(v, now_y, now_x);
 			}
+			v->prev_time = v->now_time;
 		}
 		// move block
 		if (prev_y != now_y || prev_x != now_x)
@@ -100,7 +119,7 @@ static void	game_loop(t_vars *v)
 int		exit_tetris(void)
 {
 	reset_screen();
-	return 0;
+	exit(0);
 }
 
 /*!

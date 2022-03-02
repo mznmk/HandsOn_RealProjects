@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 14:55:50 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 18:32:40 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ struct termios	ntty;
 
 // ================================== macro ================================= //
 
-# define clear_field()				printf("\033[2J")
+# define clear_board()				printf("\033[2J")
 # define set_position(y, x)			printf("\033[%d;%dH", (y)+1, (x)*2+1)
 # define set_char_color(n)			printf("\033[3%dm", (n))
 # define set_back_color(n)			printf("\033[4%dm", (n))
@@ -46,13 +46,13 @@ struct termios	ntty;
 
 // ============================= const variable ============================= //
 
-# define FLD_WIDTH					20
-# define FLD_HEIGHT					30
+# define GRID_WIDTH					20
+# define GRID_HEIGHT				20
 # define BLOCK_SIZE					4
 # define BLOCK_NUM					7
 # define LOOP_DURATION				0.5
 # define START_YCOORD				0
-# define START_XCOORD				FLD_WIDTH/2 - 1
+# define START_XCOORD				GRID_WIDTH/2 - 1
 
 // ---------------------------------- key ----------------------------------- //
 
@@ -109,8 +109,8 @@ typedef struct		s_cell
 
 typedef struct		s_vars
 {
+	t_cell			grid[GRID_HEIGHT][GRID_WIDTH];
 	t_cell			block_type[BLOCK_NUM][BLOCK_SIZE][BLOCK_SIZE];
-	t_cell			field[FLD_HEIGHT][FLD_WIDTH];
 	t_cell			block[BLOCK_SIZE][BLOCK_SIZE];
 	double			duration;
 	struct timeval	start_time;
@@ -144,6 +144,9 @@ int				print_block(t_vars *v, int y, int x);
 int				clear_block(t_vars *v, int y, int x);
 void			copy_block(t_vars *v, t_cell src[BLOCK_SIZE][BLOCK_SIZE]);
 void			rotate_block(t_vars *v, int y, int x, bool turn_right);
+
+int				check_grid(t_vars *v, int y, int x);
+void			put_grid(t_vars *v, int y, int x);
 
 // main.c
 int				exit_tetris(void);
