@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 13:38:05 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 13:52:36 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ static void	game_loop(t_vars *v)
 			else if (keycode == KEY_ARROW_RIGHT)
 				now_x++;
 			else
-				exit_tetris();
+			{
+				now_y = START_YCOORD;
+				now_x = START_XCOORD;
+			}
 		}
 		// measuring time ...
 		gettimeofday(&v->now_time, NULL);

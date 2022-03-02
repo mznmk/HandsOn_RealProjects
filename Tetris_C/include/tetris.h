@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 13:37:59 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 13:52:10 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ struct termios	ntty;
 # define BLOCK_SIZE					4
 # define BLOCK_NUM					7
 # define LOOP_DURATION				0.5
+# define START_YCOORD				0
+# define START_XCOORD				FLD_WIDTH/2 - 1
 
 // ---------------------------------- key ----------------------------------- //
 
