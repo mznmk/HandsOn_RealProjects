@@ -6,13 +6,13 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 12:47:42 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 14:35:18 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/tetris.h"
 
-int check_range(t_cell cell, int y, int x)
+static int check_range(t_cell cell, int y, int x)
 {
 	if (cell.c == '\0')
 		return -1;
@@ -47,6 +47,7 @@ int	clear_cell(t_cell cell, int y, int x)
 	fflush(stdout);
 	return 0;
 }
+
 int		print_block(t_vars *v, int y, int x)
 {
 	for (int i = 0; i < BLOCK_SIZE; i++)
@@ -68,5 +69,28 @@ void	copy_block(t_vars *v, t_cell src[BLOCK_SIZE][BLOCK_SIZE])
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
 			v->block[i][j] = src[i][j];
+	return;
+}
+
+void	rotate_block(t_vars *v, int y, int x, bool turn_right)
+{
+	t_cell	block_tmp[BLOCK_SIZE][BLOCK_SIZE];
+
+	// rotate & copy block ( block -> block_tmp )
+	for (int i = 0; i < BLOCK_SIZE; i++)
+		for (int j = 0; j < BLOCK_SIZE; j++)
+		{
+			if (turn_right)
+				block_tmp[j][BLOCK_SIZE - 1 - i] = v->block[i][j];
+			else
+				block_tmp[BLOCK_SIZE - 1 - j][i] = v->block[i][j];
+		}
+	// clear block ( block )
+	clear_block(v, y, x);
+	// copy block ( block_tmp -> block )
+	copy_block(v, block_tmp);
+	// print block ( rotated block )
+	print_block(v, y, x);
+
 	return;
 }

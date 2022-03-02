@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 13:52:36 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 14:36:37 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	game_loop(t_vars *v)
 // printf("%lx\n", keycode);
 // set_char_color(CLR_DEFAULT);
 			if (keycode == KEY_ARROW_UP)
-				now_y--;
+				rotate_block(v, now_y, now_x, true);
 			else if (keycode == KEY_ARROW_DOWN)
 				now_y++;
 			else if (keycode == KEY_ARROW_LEFT)

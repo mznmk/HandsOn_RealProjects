@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 13:52:10 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/02 14:36:11 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ struct termios	ntty;
 # include <term.h>
 // # include <time.h>
 # include <sys/time.h>
+# include <stdbool.h>
 
 // ================================== macro ================================= //
 
@@ -135,12 +136,12 @@ void			init_screen(void);
 void			reset_screen(void);
 
 // block.c
-int				check_range(t_cell cell, int y, int x);
 int				print_cell(t_cell cell, int y, int x);
 int				clear_cell(t_cell cell, int y, int x);
 int				print_block(t_vars *v, int y, int x);
 int				clear_block(t_vars *v, int y, int x);
 void			copy_block(t_vars *v, t_cell src[BLOCK_SIZE][BLOCK_SIZE]);
+void			rotate_block(t_vars *v, int y, int x, bool turn_right);
 
 // main.c
 int				exit_tetris(void);
