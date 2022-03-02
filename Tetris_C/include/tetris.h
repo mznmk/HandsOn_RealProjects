@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/03 02:37:23 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/03 05:15:58 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ struct termios	ntty;
 
 // ============================= const variable ============================= //
 
-# define GRID_WIDTH					20
+# define GRID_WIDTH					10
 # define GRID_HEIGHT				20
 # define BLOCK_SIZE					4
 # define BLOCK_NUM					7
@@ -111,7 +111,14 @@ typedef struct		s_vars
 {
 	t_cell			grid[GRID_HEIGHT][GRID_WIDTH];
 	t_cell			block_type[BLOCK_NUM][BLOCK_SIZE][BLOCK_SIZE];
-	t_cell			block[BLOCK_SIZE][BLOCK_SIZE];
+	t_cell			block_now[BLOCK_SIZE][BLOCK_SIZE];
+	int				prev_y;
+	int				prev_x;
+	int				now_y;
+	int				now_x;
+	t_cell			block_next[BLOCK_SIZE][BLOCK_SIZE];
+	int				next_y;
+	int				next_x;
 	double			duration;
 	struct timeval	start_time;
 	struct timeval	prev_time;
@@ -140,9 +147,13 @@ void			reset_screen(void);
 // block.c
 int				print_cell(t_cell cell, int y, int x);
 int				clear_cell(t_cell cell, int y, int x);
-int				print_block(t_vars *v, int y, int x);
-int				clear_block(t_vars *v, int y, int x);
-void			copy_block(t_vars *v, t_cell src[BLOCK_SIZE][BLOCK_SIZE]);
+void			print_block_now(t_vars *v);
+void			print_block_next(t_vars *v);
+void			clear_block_prev(t_vars *v);
+void			clear_block_now(t_vars *v);
+void			clear_block_next(t_vars *v);
+void			set_block_now(t_vars *v, int type);
+void			set_block_next(t_vars *v, int type);
 void			rotate_block(t_vars *v, int y, int x, bool turn_right);
 
 int				check_grid(t_vars *v, int y, int x);

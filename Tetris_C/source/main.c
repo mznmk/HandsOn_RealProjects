@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/03 02:39:25 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/03 05:19:30 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,54 +19,63 @@
 */
 static void	game_loop(t_vars *v)
 {
-	int now_y = START_YCOORD;
-	int now_x = START_XCOORD;
-	int prev_y, prev_x;
-	int rnd;
+	// [ variables ]
+	int rnd_now, rnd_next;
 	unsigned long	keycode;
 
-	// draw game screen
+	// [ set parameter ]
+	v->prev_y = 0;
+	v->prev_x = 0;
+	v->now_y = START_YCOORD;
+	v->now_x = START_XCOORD;
+	v->next_y = START_YCOORD;
+	v->next_x = GRID_WIDTH + 1;
+
+	// [ draw game screen ]
 	// create next block
-	rnd = rand() % BLOCK_NUM;
-	copy_block(v, v->block_type[rnd]);
-	print_block(v, now_y, now_x);
+	rnd_now = rand() % BLOCK_NUM;
+	set_block_now(v, rnd_now);
+	print_block_now(v);
+	rnd_next = rand() % BLOCK_NUM;
+	set_block_next(v, rnd_next);
+	print_block_next(v);
 
 	// measuring time
 	gettimeofday(&v->prev_time, NULL);	// set prev_time
 
-	// run game main routine
+	// [ run game main routine ]
 	while (42)
 	{
-		prev_y = now_y;
-		prev_x = now_x;
+		v->prev_y = v->now_y;
+		v->prev_x = v->now_x;
 		
 		// recieved keycode from stdin ?
 		if (kbhit())
 		{
-			clear_block(v, now_y, now_x);
+			clear_block_now(v);
 			keycode = getch();
 // set_char_color(CLR_WHITE);
 // printf("%lx\n", keycode);
 // set_char_color(CLR_DEFAULT);
 			if (keycode == KEY_ARROW_UP || keycode == 'w' ||
 				keycode == '0' || keycode == ',')
-				rotate_block(v, now_y, now_x, false);
+				rotate_block(v, v->now_y, v->now_x, false);
 			else if (keycode == '.')
-				rotate_block(v, now_y, now_x, true);
+				rotate_block(v, v->now_y, v->now_x, true);
 			else if (keycode == KEY_ARROW_DOWN || keycode == 's')
 			{
-				while (check_grid(v, now_y + 1, now_x) == 0)
-					now_y++;
+				while (check_grid(v, v->now_y + 1, v->now_x) == 0)
+					v->now_y++;
 			}
 			else if (keycode == KEY_ARROW_LEFT || keycode == 'a')
 			{
-				if (check_grid(v, now_y, now_x - 1) == 0)
-					now_x--;
+				if (check_grid(v, v->now_y, v->now_x - 1) == 0)
+					v->now_x--;
 			}
 			else if (keycode == KEY_ARROW_RIGHT || keycode == 'd')
 			{
-				if (check_grid(v, now_y, now_x + 1) == 0)
-					now_x++;
+				if (check_grid(v, v->now_y, v->now_x + 1) == 0)
+					v->now_x++;
 			}
 			// else
 			// {
@@ -82,34 +91,38 @@ static void	game_loop(t_vars *v)
 		if (LOOP_DURATION < v->duration)
 		{
 			// if (now_y < GRID_HEIGHT)
-			if (check_grid(v, now_y + 1, now_x) == 0)
-				now_y++;
+			if (check_grid(v, v->now_y + 1, v->now_x) == 0)
+				v->now_y++;
 			else
 			{
 				// game over ?
-				if (now_y == 0)
+				if (v->now_y == START_YCOORD)
 					exit_tetris();
 				// fix block !
-				put_grid(v, now_y, now_x);
+				put_grid(v, v->now_y, v->now_x);
 				// delete lines
 				deleteGrid(v);
 				// create next block
-				now_y = START_YCOORD;
-				now_x = START_XCOORD;
-				prev_y = START_YCOORD;
-				prev_x = START_XCOORD;
-				rnd = rand() % BLOCK_NUM;
-				copy_block(v, v->block_type[rnd]);
-				print_block(v, now_y, now_x);
+				v->now_y = START_YCOORD;
+				v->now_x = START_XCOORD;
+				v->prev_y = START_YCOORD;
+				v->prev_x = START_XCOORD;
+				rnd_now = rnd_next;
+				set_block_now(v, rnd_now);
+				print_block_now(v);
+				rnd_next = rand() % BLOCK_NUM;
+				clear_block_next(v);
+				set_block_next(v, rnd_next);
+				print_block_next(v);				
 			}
 			v->prev_time = v->now_time;
 		}
 		// move block
-		if (prev_y != now_y || prev_x != now_x)
+		if (v->prev_y != v->now_y || v->prev_x != v->now_x)
 		{
 			// redraw block
-			clear_block(v, prev_y, prev_x);
-			print_block(v, now_y, now_x);
+			clear_block_prev(v);
+			print_block_now(v);
 		}
 	}
 }
