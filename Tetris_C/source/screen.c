@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:07:13 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/03 07:10:32 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 02:59:04 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_screen(void)
 	set_back_color(CLR_BLACK);
 	set_char_color(CLR_WHITE);
 	set_attribute(ATR_NORMAL);
-	clear_board();
+	clear_terminal();
 	cursol_off();
 
 	// [ return ]
@@ -34,7 +34,7 @@ void	reset_screen(void)
 	set_back_color(CLR_BLACK);
 	set_char_color(CLR_WHITE);
 	set_attribute(ATR_NORMAL);
-	clear_board();
+	clear_terminal();
 	cursol_on();
 
 	// [ load terminal config (termcap) ]
@@ -42,19 +42,4 @@ void	reset_screen(void)
 
 	// [ return ]
 	return;
-}
-
-void	draw_score(t_vars *v)
-{
-	// [ draw score ]
-	set_position(SCORE_YCOORD, SCORE_XCOORD);
-	set_char_color(CLR_WHITE);
-	set_back_color(CLR_BLACK);
-	set_attribute(ATR_NORMAL);
-	set_attribute(ATR_BLIGHT);
-	printf("%8d", v->score);
-	fflush(stdout);
-
-	// [ return ]
-	return;	
 }

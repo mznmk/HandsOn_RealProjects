@@ -6,17 +6,17 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 04:59:20 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/02 12:09:19 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 03:15:13 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/tetris.h"
 
-extern int				errno;
+// extern int				errno;
 extern struct termios	otty;
 extern struct termios	ntty;
 
-int     kbhit(void)
+int     		kbhit(void)
 {
 	fd_set          rfd;
 	struct timeval  timeout = {0, 0};
@@ -39,7 +39,7 @@ unsigned long	getch(void)
 	{
 		keycode = 0UL;
 		rtn = read(0, &keycode, 8);
-		if (!(rtn < 0 && errno == EINTR))
+		if (!(rtn < 0))// && errno == EINTR))
 			break;
 	} 
 	if (rtn == 0)
@@ -50,20 +50,20 @@ unsigned long	getch(void)
 
 static void    onsignal(int sig)
 {
-	signal(sig, SIG_IGN);
+	// signal(sig, SIG_IGN);
 	switch (sig)
 	{
-	case SIGINT:
-	case SIGQUIT:
-	case SIGTERM:
-	case SIGHUP:
-		exit(1);
-		break;    
+		case SIGINT:
+		case SIGQUIT:
+		case SIGTERM:
+		case SIGHUP:
+			exit_tetris();
+			break;    
 	}
 	return;
 }
 
-int     tinit(void)
+int     		tinit(void)
 {
 	if(tcgetattr(1, &otty) < 0)
 		return -1;
@@ -81,7 +81,7 @@ int     tinit(void)
 	return 0;
 }
 
-int		tfinal(void)
+int				tfinal(void)
 {
 	tcsetattr(1, TCSADRAIN, &otty);
 	write(1, "\n", 1);

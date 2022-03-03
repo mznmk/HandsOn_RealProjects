@@ -6,7 +6,7 @@
 #    By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 13:17:41 by mmizuno           #+#    #+#              #
-#    Updated: 2022/03/02 06:59:10 by mmizuno          ###   ########.fr        #
+#    Updated: 2022/03/04 03:05:31 by mmizuno          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,10 @@ PRJ_DIR				= ./
 TETRIS_DIR			= $(PRJ_DIR)
 TETRIS_INCDIR		= $(TETRIS_DIR)include/
 TETRIS_SRCDIR		= $(TETRIS_DIR)source/
-TETRIS_SRCNAME		= time.c \
-					  io.c \
+TETRIS_SRCNAME		= io.c \
 					  screen.c \
 					  init.c \
+					  canvas.c \
 					  block.c \
 					  main.c
 TETRIS_SRCS			= $(addprefix $(TETRIS_SRCDIR), $(TETRIS_SRCNAME))

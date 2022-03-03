@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/03 07:12:35 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 04:32:51 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,28 @@
 
 // ============================ global variable ============================= //
 
-int				errno;
+// int				errno;
 struct termios	otty;
 struct termios	ntty;	
 
 // ================================= library ================================ //
 
 # include <stdio.h>
+# include <time.h>
 # include <sys/select.h>
 # include <unistd.h>
-# include <errno.h>
+// # include <errno.h>
 // # include <sys/types.h>
 # include <signal.h>
 # include <stdlib.h>
 // # include <termios.h>
 # include <term.h>
-// # include <time.h>
 # include <sys/time.h>
 # include <stdbool.h>
 
 // ================================== macro ================================= //
 
-# define clear_board()				printf("\033[2J")
+# define clear_terminal()			printf("\033[2J")
 # define set_position(y, x)			printf("\033[%d;%dH", (y)+1, (x)*2+1)
 # define set_char_color(n)			printf("\033[3%dm", (n))
 # define set_back_color(n)			printf("\033[4%dm", (n))
@@ -46,16 +46,29 @@ struct termios	ntty;
 
 // ============================= const variable ============================= //
 
-# define GRID_WIDTH					10
-# define GRID_HEIGHT				20
 # define BLOCK_SIZE					4
 # define BLOCK_NUM					7
+
+# define GRID_WIDTH					10
+# define GRID_HEIGHT				20
+# define NEXT_WIDTH					BLOCK_SIZE
+# define NEXT_HEIGHT				BLOCK_SIZE
+# define SCORE_WIDTH				BLOCK_SIZE
+# define SCORE_HEIGHT				1
+# define BACK_WIDTH					GRID_WIDTH + BLOCK_SIZE + 3
+# define BACK_HEIGHT				GRID_HEIGHT + 2
+
+# define GRID_YCOORD				1
+# define GRID_XCOORD				1
+# define NEXT_YCOORD				1
+# define NEXT_XCOORD				GRID_WIDTH + 2
+# define SCORE_YCOORD				NEXT_YCOORD + BLOCK_SIZE + 1
+# define SCORE_XCOORD				GRID_WIDTH + 2
+# define BACK_YCOORD				0
+# define BACK_XCOORD				0
+
 # define START_YCOORD				0
 # define START_XCOORD				GRID_WIDTH/2 - 1
-# define NEXT_YCOORD				START_YCOORD
-# define NEXT_XCOORD				GRID_WIDTH + 1
-# define SCORE_YCOORD				BLOCK_SIZE + 1
-# define SCORE_XCOORD				GRID_WIDTH + 1
 # define LOOP_DURATION				0.5
 
 // --------------------------------- score ---------------------------------- //
@@ -125,7 +138,9 @@ typedef struct		s_vars
 	int				prev_x;
 	int				now_y;
 	int				now_x;
+	int				now_rnd;
 	t_cell			block_next[BLOCK_SIZE][BLOCK_SIZE];
+	int				next_rnd;
 	int				score;
 	double			duration;
 	struct timeval	start_time;
@@ -135,38 +150,42 @@ typedef struct		s_vars
 
 // ========================= prototype declaration ========================== //
 
-// init.c
-void			init_vars(t_vars *v);
-
-// time.c
-
-// int				wait(int msec);
-
 // io.c
 int				kbhit(void);
 unsigned long	getch(void);
 int				tinit(void);
 int				tfinal(void);
 
+// init.c
+void			init_vars(t_vars *v);
+
 // screen.c
 void			init_screen(void);
 void			reset_screen(void);
+
+// canvas.c
+void			draw_background(void);
 void			draw_score(t_vars *v);
 
-// block.c
-int				print_cell(t_cell cell, int y, int x);
+int				draw_cell(t_cell cell, int y, int x);
+int				draw_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
+void			draw_block_now(t_vars *v);
+void			draw_block_next(t_vars *v);
+void			draw_grid(t_vars *v);
+
 int				clear_cell(t_cell cell, int y, int x);
-void			print_block_now(t_vars *v);
-void			print_block_next(t_vars *v);
+void			clear_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
 void			clear_block_prev(t_vars *v);
 void			clear_block_now(t_vars *v);
 void			clear_block_next(t_vars *v);
+
+// block.c
 void			set_block_now(t_vars *v, int type);
 void			set_block_next(t_vars *v, int type);
 void			rotate_block(t_vars *v, int y, int x, bool turn_right);
 
 int				check_grid(t_vars *v, int y, int x);
-void			put_grid(t_vars *v, int y, int x);
+void			fix_block_to_grid(t_vars *v, int y, int x);
 void			erase_lines(t_vars *v);
 
 // main.c
