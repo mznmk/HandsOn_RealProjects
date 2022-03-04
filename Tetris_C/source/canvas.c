@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 02:15:45 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 02:36:54 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void		draw_field(void)
 	// draw screen
 	for (int i = 0; i < e.field_size.height; i++)
 		for (int j = 0; j < e.field_size.width; j++)
-			draw_cell(v.field[calc_field_index(i, j)],
+			draw_cell(v.field[conv_field_coord(i, j)],
 						e.field_coord.y + i, e.field_coord.x + j);
 }
 

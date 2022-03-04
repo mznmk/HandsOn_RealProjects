@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 00:42:49 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 03:42:37 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void			fix_block_to_field(int y, int x)
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
 		if (check_cell(v.block_now[i][j], y + i, x + j) == 0)
-			v.field[calc_field_index(y+i, x+j)] = v.block_now[i][j];
+			v.field[conv_field_coord(y+i, x+j)] = v.block_now[i][j];
 	
 	// [ return ]
 	return;
@@ -95,7 +95,7 @@ static int		check_line(int y)
 {
 	// all cells filled in line ?
 	for (int j = 0; j < e.field_size.width; j++)
-		if (v.field[calc_field_index(y, j)].c == '\0')	// fail ?
+		if (v.field[conv_field_coord(y, j)].c == '\0')	// fail ?
 			return -1;
 	// return
 	return 0;
@@ -106,8 +106,8 @@ static void		erase_line(int y)
 	// [ erase line from bottom to top ]
 	for (int i = y; i > 0; i--)
 		for (int j = 0; j < e.field_size.width; j++)
-			v.field[calc_field_index(i, j)]
-				= v.field[calc_field_index(i-1, j)];
+			v.field[conv_field_coord(i, j)]
+				= v.field[conv_field_coord(i-1, j)];
 	
 	// [ redraw screen ]
 	// set_back_color(CLR_BLACK);
@@ -129,7 +129,9 @@ void			erase_lines(void)
 			erase_line(i);
 			erase_count++;
 		}
-
+	if (erase_count == 0)
+		return;
+	
 	// [ update score (erase line) ]
 	switch (erase_count)
 	{
@@ -147,6 +149,9 @@ void			erase_lines(void)
 			break;
 	}
 	draw_score();
+
+	// [ fall speed up ]
+	v.fall_time_max -= 0.01;
 
 	// [ return ]
 	return;

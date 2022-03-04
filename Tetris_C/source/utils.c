@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 05:38:47 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 22:06:33 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 02:36:58 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int				check_range(t_cell cell, int y, int x)
 int				check_cell(t_cell cell_self, int y, int x)
 {
 	if (check_range(cell_self, y, x) ||
-		v.field[calc_field_index(y, x)].c != '\0')
+		v.field[conv_field_coord(y, x)].c != '\0')
 		return -1;
 
 	return 0;

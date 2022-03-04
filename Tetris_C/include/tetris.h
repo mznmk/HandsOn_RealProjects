@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 02:21:58 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 03:28:54 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,8 @@
 # include <time.h>
 # include <sys/select.h>
 # include <unistd.h>
-// # include <errno.h>
-// # include <sys/types.h>
 # include <signal.h>
 # include <stdlib.h>
-// # include <termios.h>
 # include <term.h>
 # include <sys/time.h>
 # include <stdbool.h>
@@ -44,26 +41,11 @@
 # define BLOCK_SIZE					4
 # define BLOCK_NUM					7
 
-// # define FIELD_WIDTH				10
-// # define FIELD_HEIGHT				20
 # define NEXT_WIDTH					BLOCK_SIZE
 # define NEXT_HEIGHT				BLOCK_SIZE
 # define SCORE_WIDTH				NEXT_WIDTH
 # define SCORE_HEIGHT				2
-// # define BACK_WIDTH					FIELD_WIDTH + BLOCK_SIZE + 3
-// # define BACK_HEIGHT				FIELD_HEIGHT + 2
 
-// # define FIELD_YCOORD				1
-// # define FIELD_XCOORD				1
-// # define NEXT_YCOORD				1
-// # define NEXT_XCOORD				FIELD_WIDTH + 2
-// # define SCORE_YCOORD				NEXT_YCOORD + BLOCK_SIZE + 1
-// # define SCORE_XCOORD				FIELD_WIDTH + 2
-// # define BACK_YCOORD				0
-// # define BACK_XCOORD				0
-
-// # define START_YCOORD				0
-// # define START_XCOORD				FIELD_WIDTH/2 - 1
 # define LOOP_DURATION				0.5
 
 // --------------------------------- score ---------------------------------- //
@@ -102,17 +84,6 @@
 # define KEY_ARROW_DOWN				0x425B1B
 # define KEY_ARROW_RIGHT			0x435B1B
 # define KEY_ARROW_LEFT				0x445B1B
-
-# define KEY_SPACE					0x20
-
-# define KEY_EOT					0x4
-# define KEY_RETURN					0xA
-
-# define KEY_BACKSPACE				0x7F
-# define KEY_DELETE					0x7E335B1B
-
-# define KEY_HOME					0x485B1B
-# define KEY_END					0x465B1B
 
 // ================================= struct ================================= //
 
@@ -174,7 +145,8 @@ typedef struct		s_vars
 	t_cell			block_next2[BLOCK_SIZE][BLOCK_SIZE];
 	int				next2_rnd;
 	int				score;
-	double			duration;
+	double			fall_time_now;
+	double			fall_time_max;
 	struct timeval	start_time;
 	struct timeval	prev_time;
 	struct timeval	now_time;	
@@ -182,10 +154,7 @@ typedef struct		s_vars
 
 // ============================ global variable ============================= //
 
-// int				errno;
 t_envs			e;
-// struct termios	otty;
-// struct termios	ntty;
 t_vars			v;
 
 // ========================= prototype declaration ========================== //
@@ -205,7 +174,7 @@ void			init_vars(void);
 // memory.c
 void			allocate_memory(void);
 void			deallocate_memory(void);
-int				calc_field_index(int y, int x);
+int				conv_field_coord(int y, int x);
 
 // utils.c
 int				is_filled_cell(t_cell cell);

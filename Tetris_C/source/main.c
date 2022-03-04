@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 01:12:58 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 03:41:55 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ static void		game_loop(void)
 	v.prev_x = 0;
 	v.now_y = e.start_coord.y;
 	v.now_x = e.start_coord.x;
+	v.fall_time_max = LOOP_DURATION;
 
 	// [ draw game screen ]
 	draw_background();
@@ -154,13 +155,13 @@ static void		game_loop(void)
 			move_block(keycode);
 		}
 
-		// [ block fell regularly by gravity :) ]
-		// measuring time ...
+		// [ block fell regularly by gravity  ]
+		// measuring time
 		gettimeofday(&v.now_time, NULL);
-		v.duration = (v.now_time.tv_sec - v.prev_time.tv_sec)
-				+ (v.now_time.tv_usec - v.prev_time.tv_usec) / 1000000.0;
+		v.fall_time_now = (v.now_time.tv_sec - v.prev_time.tv_sec)
+					+ (v.now_time.tv_usec - v.prev_time.tv_usec) / 1000000.0;
 		// fell regularly
-		if (LOOP_DURATION < v.duration)
+		if (v.fall_time_max < v.fall_time_now)
 		{
 			// can move block to bottom ?
 			if (judge_collision(v.block_now,v.now_y + 1, v.now_x) == 0)

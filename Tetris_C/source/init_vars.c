@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 03:59:19 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 22:47:41 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 02:36:50 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ static void		init_vars_field(void)
 
 	for (int i = 0; i < e.field_size.height; i++)
 		for (int j = 0; j < e.field_size.width; j++)
-			v.field[calc_field_index(i, j)] = templete;
+			v.field[conv_field_coord(i, j)] = templete;
 }
 
 /*!
