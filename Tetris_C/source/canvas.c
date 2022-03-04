@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 02:36:54 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 05:05:34 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,19 @@
 extern t_envs	e;
 extern t_vars	v;
 
+static void		set_random_color(void)
+{
+	int		rnd;
+	rnd = rand() % 8;		// 0 - 7
+	set_char_color(rnd);
+	rnd = rand() % 8;		// 0 - 7
+	set_back_color(rnd);
+}
+
 static void		draw_screen_back(void)
 {
 	// [ draw screen back ]
-	set_char_color(CLR_BLACK);
-	set_back_color(CLR_WHITE);
+	set_random_color();
 	set_attribute(ATR_BLIGHT);
 	for (int i = 0; i < e.back_size.height; i++)
 		for (int j = 0 ; j < e.back_size.width; j++)

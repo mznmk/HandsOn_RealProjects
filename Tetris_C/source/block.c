@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 03:42:37 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 04:54:12 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void			erase_lines(void)
 	draw_score();
 
 	// [ fall speed up ]
-	v.fall_time_max -= 0.01;
+	v.fall_time_max -= v.fall_speed;
 
 	// [ return ]
 	return;

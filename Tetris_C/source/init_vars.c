@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 03:59:19 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 02:36:50 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 03:56:55 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,10 +157,12 @@ static void	set_block_type(void)
 */
 static void		init_vars_block_type(void) 
 {
-	// [ initialize block_type ]
+	// [ set block_type ]
 	init_block_type();
 	set_block_type();
 }
+
+// -------------------------------------------------------------------------- //
 
 /*!
 ** @brief	initialize data container (field)
@@ -168,17 +170,19 @@ static void		init_vars_block_type(void)
 */
 static void		init_vars_field(void)
 {
+	// [ initialize field ]
 	// t_cell	templete = {'\0', CLR_BLACK, CLR_BLACK, ATR_NORMAL};
 	t_cell	templete;
 	templete.c = '\0';
 	templete.char_color = CLR_BLACK;
 	templete.back_color = CLR_BLACK;
 	templete.attribute = ATR_NORMAL;
-
 	for (int i = 0; i < e.field_size.height; i++)
 		for (int j = 0; j < e.field_size.width; j++)
 			v.field[conv_field_coord(i, j)] = templete;
 }
+
+// -------------------------------------------------------------------------- //
 
 /*!
 ** @brief	initialize data container

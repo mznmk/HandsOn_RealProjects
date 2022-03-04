@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 03:41:55 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 04:54:07 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,12 +119,13 @@ static void		game_loop(void)
 	unsigned long	keycode;
 
 	// [ set parameter ]
-	v.score = 0;
-	v.prev_y = 0;
-	v.prev_x = 0;
-	v.now_y = e.start_coord.y;
-	v.now_x = e.start_coord.x;
-	v.fall_time_max = LOOP_DURATION;
+	// v.score = 0;
+	// v.prev_y = 0;
+	// v.prev_x = 0;
+	// v.now_y = e.start_coord.y;
+	// v.now_x = e.start_coord.x;
+	// v.fall_time_max = FALL_TIME_MAX;
+	// v.fall_speed = FALL_SPEED_BASE;
 
 	// [ draw game screen ]
 	draw_background();

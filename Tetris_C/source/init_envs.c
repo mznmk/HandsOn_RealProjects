@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 12:48:55 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 03:21:37 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 08:36:23 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ static void		set_size(int argc, char **argv)
 	e.back_size.width = e.field_size.width + e.next1_size.width + 3;
 }
 
+// -------------------------------------------------------------------------- //
+
 static void		set_coord(void)
 {
 	// [ set back coord ]
@@ -115,6 +117,36 @@ static void		set_coord(void)
 	e.start_coord.x = e.field_size.width / 2 - 2;
 }
 
+// -------------------------------------------------------------------------- //
+
+static void		set_param_fall_speed_up(int argc, char **argv)
+{
+	// [ set fall speed ]
+	int		rate;
+	rate = 0;
+	if (3 < argc)
+		rate = atoi(argv[3]);
+	if (FALL_SPEED_MIN <= rate && rate <= FALL_SPEED_MAX)
+		v.fall_speed = FALL_SPEED_BASE * rate;
+	else
+		v.fall_speed = FALL_SPEED_BASE * (FALL_SPEED_MIN + FALL_SPEED_MAX) / 2;
+}
+
+static void		set_param(int argc, char **argv)
+{
+	// [ set score ]
+	v.score = 0;
+	// [ block_now coord ]
+	v.prev_y = 0;
+	v.prev_x = 0;
+	v.now_y = e.start_coord.y;
+	v.now_x = e.start_coord.x;
+	// [ fall_time ]
+	v.fall_time_max = FALL_TIME_MAX;
+	// [ fall speed ]
+	set_param_fall_speed_up(argc, argv);
+}
+// -------------------------------------------------------------------------- //
 
 void			init_envs(int argc, char **argv)
 {
@@ -122,4 +154,6 @@ void			init_envs(int argc, char **argv)
 	set_size(argc, argv);
 	// [ set field/next/score/back/start coord ]
 	set_coord();
+	// [ set game parameter ]
+	set_param(argc, argv);
 }

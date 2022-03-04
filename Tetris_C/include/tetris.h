@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 03:28:54 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 04:57:52 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@
 # define SCORE_WIDTH				NEXT_WIDTH
 # define SCORE_HEIGHT				2
 
-# define LOOP_DURATION				0.5
+# define FALL_TIME_MAX				0.5
+# define FALL_SPEED_BASE			0.002
+# define FALL_SPEED_MIN				1
+# define FALL_SPEED_MAX				9
 
 // --------------------------------- score ---------------------------------- //
 
@@ -147,6 +150,7 @@ typedef struct		s_vars
 	int				score;
 	double			fall_time_now;
 	double			fall_time_max;
+	double			fall_speed;
 	struct timeval	start_time;
 	struct timeval	prev_time;
 	struct timeval	now_time;	
