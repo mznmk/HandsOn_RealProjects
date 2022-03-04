@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 22:09:52 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 00:42:49 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,17 @@ static void		set_block(t_cell dest[BLOCK_SIZE][BLOCK_SIZE],
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
 			dest[i][j] = src[i][j];
-
-	return;
 }
 
 void			set_new_block_now(int type)
 {
 	set_block(v.block_now, v.block_type[type]);
-	// [ return ]
-	return;
 }
 
-void		set_new_block_next(int type)
+void		set_new_block_next(int type1, int type2)
 {
-	set_block(v.block_next, v.block_type[type]);
-	// [ return ]
-	return;
+	set_block(v.block_next1, v.block_type[type1]);
+	set_block(v.block_next2, v.block_type[type2]);
 }
 
 // ========================================================================== //

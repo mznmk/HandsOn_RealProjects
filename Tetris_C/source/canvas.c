@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 22:07:55 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 01:49:55 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static void		draw_screen_back(void)
 	set_char_color(CLR_BLACK);
 	set_back_color(CLR_WHITE);
 	set_attribute(ATR_BLIGHT);
-	for (int i = e.back_coord.y; i < e.back_coord.y + e.back_size.height; i++)
-		for (int j = e.back_coord.x; j < e.back_coord.x + e.back_size.width; j++)
+	for (int i = 0; i < e.back_size.height; i++)
+		for (int j = 0 ; j < e.back_size.width; j++)
 		{
-			set_position(i, j);
+			set_position(e.back_coord.y + i, e.back_coord.x + j);
 			printf("%c%c", '#', '#');
+			fflush(stdout);
 		}
-	fflush(stdout);
 }
 
 static void		draw_field_back(void)
@@ -36,13 +36,13 @@ static void		draw_field_back(void)
 	set_char_color(CLR_BLACK);
 	set_back_color(CLR_BLACK);
 	set_attribute(ATR_NORMAL);
-	for (int i = e.field_coord.y; i < e.field_coord.y + e.field_size.height; i++)
-		for (int j = e.field_coord.x; j < e.field_coord.x + e.field_size.width; j++)
+	for (int i = 0; i < e.field_size.height; i++)
+		for (int j = 0; j < e.field_size.width; j++)
 		{
-			set_position(i, j);
+			set_position(e.field_coord.y + i, e.field_coord.x + j);
 			printf("%c%c", ' ', ' ');
+			fflush(stdout);
 		}
-	fflush(stdout);
 }
 
 static void		draw_next_back(void)
@@ -51,13 +51,16 @@ static void		draw_next_back(void)
 	set_char_color(CLR_BLACK);
 	set_back_color(CLR_BLACK);
 	set_attribute(ATR_NORMAL);
-	for (int i = e.next_coord.y; i < e.next_coord.y + NEXT_HEIGHT; i++)
-		for (int j = e.next_coord.x; j < e.next_coord.x + NEXT_WIDTH; j++)
+	for (int i = 0; i < NEXT_HEIGHT; i++)
+		for (int j = 0; j < NEXT_WIDTH; j++)
 		{
-			set_position(i, j);
+			set_position(e.next1_coord.y + i, e.next1_coord.x + j);
 			printf("%c%c", ' ', ' ');
+			fflush(stdout);
+			set_position(e.next2_coord.y + i, e.next2_coord.x + j);
+			printf("%c%c", ' ', ' ');
+			fflush(stdout);
 		}
-	fflush(stdout);
 }
 
 static void		draw_score_back(void)
@@ -66,10 +69,10 @@ static void		draw_score_back(void)
 	set_char_color(CLR_BLACK);
 	set_back_color(CLR_BLACK);
 	set_attribute(ATR_NORMAL);
-	for (int i = e.score_coord.y; i < e.score_coord.y + SCORE_HEIGHT; i++)
-		for (int j = e.score_coord.x; j < e.score_coord.x + SCORE_WIDTH; j++)
+	for (int i = 0; i < SCORE_HEIGHT; i++)
+		for (int j = 0; j < SCORE_WIDTH; j++)
 		{
-			set_position(i, j);
+			set_position(e.score_coord.y + i, e.score_coord.x + j);
 			printf("%c%c", ' ', ' ');
 		}
 	fflush(stdout);
@@ -124,7 +127,8 @@ void		draw_block_now(void)
 
 void		draw_block_next(void)
 {
-	draw_block(v.block_next, e.next_coord.y, e.next_coord.x);
+	draw_block(v.block_next1, e.next1_coord.y, e.next1_coord.x);
+	draw_block(v.block_next2, e.next2_coord.y, e.next2_coord.x);
 }
 
 // -------------------------------------------------------------------------- //
@@ -141,11 +145,13 @@ void		draw_field(void)
 void	draw_score(void)
 {
 	// [ draw score ]
-	set_position(e.score_coord.y, e.score_coord.x);
 	set_char_color(CLR_WHITE);
 	set_back_color(CLR_BLACK);
 	set_attribute(ATR_NORMAL);
 	set_attribute(ATR_BLIGHT);
+	set_position(e.score_coord.y, e.score_coord.x);
+	printf("score");
+	set_position(e.score_coord.y + 1, e.score_coord.x);
 	printf("%8d", v.score);
 	fflush(stdout);
 
@@ -205,7 +211,8 @@ void		clear_block_now(void)
 void		clear_block_next(void)
 {
 	// [ clear block_next ]
-	clear_block(v.block_next, e.next_coord.y, e.next_coord.x);
+	clear_block(v.block_next1, e.next1_coord.y, e.next1_coord.x);
+	clear_block(v.block_next2, e.next2_coord.y, e.next2_coord.x);
 
 	// [ return ]
 	return;

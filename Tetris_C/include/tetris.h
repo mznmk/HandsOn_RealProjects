@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 22:51:34 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 00:42:04 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,11 +148,13 @@ typedef struct		s_envs
 	t_size			field_size;
 	t_size			field_size_max;
 	t_size			field_size_min;
-	t_size			next_size;
+	t_size			next1_size;
+	t_size			next2_size;
 	t_size			score_size;
 	t_coord			back_coord;
 	t_coord			field_coord;
-	t_coord			next_coord;
+	t_coord			next1_coord;
+	t_coord			next2_coord;
 	t_coord			score_coord;
 	t_coord			start_coord;
 	struct termios	otty;
@@ -169,8 +171,10 @@ typedef struct		s_vars
 	int				now_y;
 	int				now_x;
 	int				now_rnd;
-	t_cell			block_next[BLOCK_SIZE][BLOCK_SIZE];
-	int				next_rnd;
+	t_cell			block_next1[BLOCK_SIZE][BLOCK_SIZE];
+	int				next1_rnd;
+	t_cell			block_next2[BLOCK_SIZE][BLOCK_SIZE];
+	int				next2_rnd;
 	int				score;
 	double			duration;
 	struct timeval	start_time;
@@ -228,7 +232,7 @@ void			clear_block_next(void);
 
 // block.c
 void			set_new_block_now(int type);
-void			set_new_block_next(int type);
+void			set_new_block_next(int type1, int type2);
 void			rotate_block(int y, int x, bool turn_right);
 
 int				judge_collision(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);

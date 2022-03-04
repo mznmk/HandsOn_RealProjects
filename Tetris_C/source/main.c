@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 22:42:29 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 01:12:58 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static void		move_block(unsigned long keycode)
 static void		game_loop(void)
 {
 	// [ variables ]
-	int rnd_now, rnd_next;
+	int rnd_now, rnd_next1, rnd_next2;
 	unsigned long	keycode;
 
 	// [ set parameter ]
@@ -131,8 +131,9 @@ static void		game_loop(void)
 	rnd_now = choose_random_type(true);
 	set_new_block_now(rnd_now);
 	draw_block_now();
-	rnd_next = choose_random_type(false);
-	set_new_block_next(rnd_next);
+	rnd_next1 = choose_random_type(false);
+	rnd_next2 = choose_random_type(false);
+	set_new_block_next(rnd_next1, rnd_next2);
 	draw_block_next();
 	draw_score();
 
@@ -180,12 +181,13 @@ static void		game_loop(void)
 				v.now_x = e.start_coord.x;
 				v.prev_y = e.start_coord.y;
 				v.prev_x = e.start_coord.x;
-				rnd_now = rnd_next;
+				rnd_now = rnd_next1;
 				set_new_block_now(rnd_now);
 				draw_block_now();
-				rnd_next = choose_random_type(false);
+				rnd_next1 = rnd_next2;
+				rnd_next2 = choose_random_type(false);
 				clear_block_next();
-				set_new_block_next(rnd_next);
+				set_new_block_next(rnd_next1, rnd_next2);
 				draw_block_next();				
 			}
 			v.prev_time = v.now_time;
@@ -211,9 +213,6 @@ static void		game_loop(void)
 */
 int				main(int argc, char **argv)
 {
-	// // [ variables ]
-	// t_vars	v;
-
 	// [ execute tetris ]
 	// initialize tetris
 	init_envs(argc, argv);

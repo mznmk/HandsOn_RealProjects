@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 12:48:55 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 23:22:45 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 01:13:55 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void		get_terminal_size(void)
 static void		set_aveilable_field_size_range(void)
 {
 	// [ set field_size (min) ]
-	e.field_size_min.height = NEXT_HEIGHT * 1 + SCORE_HEIGHT + 1;
+	e.field_size_min.height = NEXT_HEIGHT * 2 + SCORE_HEIGHT + 2;
 	e.field_size_min.width = BLOCK_SIZE;
 
 	// [ set field_size (max) ]
@@ -76,8 +76,10 @@ static void		set_size(int argc, char **argv)
 	set_field_size(argc, argv);
 
 	// [ set next size ]
-	e.next_size.height = NEXT_HEIGHT;
-	e.next_size.width = NEXT_WIDTH;
+	e.next1_size.height = NEXT_HEIGHT;
+	e.next1_size.width = NEXT_WIDTH;
+	e.next2_size.height = NEXT_HEIGHT;
+	e.next2_size.width = NEXT_WIDTH;
 
 	// [ set score size ]
 	e.score_size.height = SCORE_HEIGHT;
@@ -85,7 +87,7 @@ static void		set_size(int argc, char **argv)
 
 	// [ set back size ]
 	e.back_size.height = e.field_size.height + 2;
-	e.back_size.width = e.field_size.width + e.next_size.width + 3;
+	e.back_size.width = e.field_size.width + e.next1_size.width + 3;
 	
 }
 
@@ -100,12 +102,14 @@ static void		set_coord(void)
 	e.field_coord.x = 1;
 
 	// [ set next coord ]
-	e.next_coord.y = e.field_coord.y;
-	e.next_coord.x = e.field_coord.x + e.field_size.width + 1;
+	e.next1_coord.y = e.field_coord.y;
+	e.next1_coord.x = e.field_coord.x + e.field_size.width + 1;
+	e.next2_coord.y = e.next1_coord.y + e.next1_size.height + 1;
+	e.next2_coord.x = e.next1_coord.x;
 
 	// [ set score coord ]
-	e.score_coord.y = e.next_coord.y + e.next_size.height + 1;
-	e.score_coord.x = e.next_coord.x;
+	e.score_coord.y = e.next2_coord.y + e.next2_size.height + 1;
+	e.score_coord.x = e.next2_coord.x;
 
 	// [ set start coord ]
 	e.start_coord.y = 0;
