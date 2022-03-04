@@ -6,18 +6,12 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 06:31:32 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 22:51:34 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TETRIS_H
 # define TETRIS_H
-
-// ============================ global variable ============================= //
-
-// int				errno;
-struct termios	otty;
-struct termios	ntty;	
 
 // ================================= library ================================ //
 
@@ -33,6 +27,7 @@ struct termios	ntty;
 # include <term.h>
 # include <sys/time.h>
 # include <stdbool.h>
+# include <sys/ioctl.h>
 
 // ================================== macro ================================= //
 
@@ -49,26 +44,26 @@ struct termios	ntty;
 # define BLOCK_SIZE					4
 # define BLOCK_NUM					7
 
-# define GRID_WIDTH					10
-# define GRID_HEIGHT				20
+// # define FIELD_WIDTH				10
+// # define FIELD_HEIGHT				20
 # define NEXT_WIDTH					BLOCK_SIZE
 # define NEXT_HEIGHT				BLOCK_SIZE
-# define SCORE_WIDTH				BLOCK_SIZE
-# define SCORE_HEIGHT				1
-# define BACK_WIDTH					GRID_WIDTH + BLOCK_SIZE + 3
-# define BACK_HEIGHT				GRID_HEIGHT + 2
+# define SCORE_WIDTH				NEXT_WIDTH
+# define SCORE_HEIGHT				2
+// # define BACK_WIDTH					FIELD_WIDTH + BLOCK_SIZE + 3
+// # define BACK_HEIGHT				FIELD_HEIGHT + 2
 
-# define GRID_YCOORD				1
-# define GRID_XCOORD				1
-# define NEXT_YCOORD				1
-# define NEXT_XCOORD				GRID_WIDTH + 2
-# define SCORE_YCOORD				NEXT_YCOORD + BLOCK_SIZE + 1
-# define SCORE_XCOORD				GRID_WIDTH + 2
-# define BACK_YCOORD				0
-# define BACK_XCOORD				0
+// # define FIELD_YCOORD				1
+// # define FIELD_XCOORD				1
+// # define NEXT_YCOORD				1
+// # define NEXT_XCOORD				FIELD_WIDTH + 2
+// # define SCORE_YCOORD				NEXT_YCOORD + BLOCK_SIZE + 1
+// # define SCORE_XCOORD				FIELD_WIDTH + 2
+// # define BACK_YCOORD				0
+// # define BACK_XCOORD				0
 
-# define START_YCOORD				0
-# define START_XCOORD				GRID_WIDTH/2 - 1
+// # define START_YCOORD				0
+// # define START_XCOORD				FIELD_WIDTH/2 - 1
 # define LOOP_DURATION				0.5
 
 // --------------------------------- score ---------------------------------- //
@@ -90,7 +85,7 @@ struct termios	ntty;
 # define CLR_WHITE					7
 # define CLR_DEFAULT				9
 
-// --------------------------------attribute -------------------------------- //
+// ------------------------------- attribute -------------------------------- //
 
 # define ATR_NORMAL					0
 # define ATR_BLIGHT					1
@@ -129,9 +124,44 @@ typedef struct		s_cell
 	int				attribute;
 }					t_cell;
 
+typedef struct		s_size
+{
+	int				width;
+	int				height;
+}					t_size;
+
+
+typedef struct		s_coord
+{
+	int				y;
+	int				x;
+}					t_coord;
+
+// --------------------------------- struct --------------------------------- //
+
+typedef struct		s_envs
+{
+	t_size			term_size;
+	// t_size			back_size_max;
+	// t_size			back_size_min;
+	t_size			back_size;
+	t_size			field_size;
+	t_size			field_size_max;
+	t_size			field_size_min;
+	t_size			next_size;
+	t_size			score_size;
+	t_coord			back_coord;
+	t_coord			field_coord;
+	t_coord			next_coord;
+	t_coord			score_coord;
+	t_coord			start_coord;
+	struct termios	otty;
+	struct termios	ntty;
+}					t_envs;
+
 typedef struct		s_vars
 {
-	t_cell			grid[GRID_HEIGHT][GRID_WIDTH];
+	t_cell			*field;
 	t_cell			block_type[BLOCK_NUM][BLOCK_SIZE][BLOCK_SIZE];
 	t_cell			block_now[BLOCK_SIZE][BLOCK_SIZE];
 	int				prev_y;
@@ -148,6 +178,14 @@ typedef struct		s_vars
 	struct timeval	now_time;	
 }					t_vars;
 
+// ============================ global variable ============================= //
+
+// int				errno;
+t_envs			e;
+struct termios	otty;
+struct termios	ntty;
+t_vars			v;
+
 // ========================= prototype declaration ========================== //
 
 // io.c
@@ -156,41 +194,48 @@ unsigned long	getch(void);
 int				tinit(void);
 int				tfinal(void);
 
-// init.c
-void			init_vars(t_vars *v);
+// init_env.c
+void			init_envs(int argc, char **argv);
+
+// init_vars.c
+void			init_vars(void);
+
+// memory.c
+void			allocate_memory(void);
+void			deallocate_memory(void);
+int				calc_field_index(int y, int x);
 
 // utils.c
 int				is_filled_cell(t_cell cell);
 int	check_range(t_cell cell, int y, int x);
-int	check_cell(t_vars *v, t_cell cell_self, int y, int x);
+int	check_cell(t_cell cell_self, int y, int x);
 
 // canvas.c
 void			draw_background(void);
-void			draw_score(t_vars *v);
+void			draw_score(void);
 
 int				draw_cell(t_cell cell, int y, int x);
 int				draw_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
-void			draw_block_now(t_vars *v);
-void			draw_block_next(t_vars *v);
-void			draw_grid(t_vars *v);
+void			draw_block_now(void);
+void			draw_block_next(void);
+void			draw_field(void);
 
 int				clear_cell(t_cell cell, int y, int x);
 void			clear_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
-void			clear_block_prev(t_vars *v);
-void			clear_block_now(t_vars *v);
-void			clear_block_next(t_vars *v);
+void			clear_block_prev(void);
+void			clear_block_now(void);
+void			clear_block_next(void);
 
 // block.c
-void			set_new_block_now(t_vars *v, int type);
-void			set_new_block_next(t_vars *v, int type);
-void			rotate_block(t_vars *v, int y, int x, bool turn_right);
+void			set_new_block_now(int type);
+void			set_new_block_next(int type);
+void			rotate_block(int y, int x, bool turn_right);
 
-int				judge_collision(t_vars *v,
-							t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
-void			fix_block_to_grid(t_vars *v, int y, int x);
-void			erase_lines(t_vars *v);
+int				judge_collision(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
+void			fix_block_to_field(int y, int x);
+void			erase_lines(void);
 
 // main.c
-int				exit_tetris(void);
+void			exit_tetris(void);
 
 #endif

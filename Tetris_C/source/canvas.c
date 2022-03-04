@@ -6,11 +6,14 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 10:08:45 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 22:07:55 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/tetris.h"
+
+extern t_envs	e;
+extern t_vars	v;
 
 static void		draw_screen_back(void)
 {
@@ -18,8 +21,8 @@ static void		draw_screen_back(void)
 	set_char_color(CLR_BLACK);
 	set_back_color(CLR_WHITE);
 	set_attribute(ATR_BLIGHT);
-	for (int i = BACK_YCOORD; i < BACK_YCOORD + BACK_HEIGHT; i++)
-		for (int j = BACK_XCOORD; j < BACK_XCOORD + BACK_WIDTH; j++)
+	for (int i = e.back_coord.y; i < e.back_coord.y + e.back_size.height; i++)
+		for (int j = e.back_coord.x; j < e.back_coord.x + e.back_size.width; j++)
 		{
 			set_position(i, j);
 			printf("%c%c", '#', '#');
@@ -27,14 +30,14 @@ static void		draw_screen_back(void)
 	fflush(stdout);
 }
 
-static void		draw_grid_back(void)
+static void		draw_field_back(void)
 {
-	// [ draw grid back ]
+	// [ draw field back ]
 	set_char_color(CLR_BLACK);
 	set_back_color(CLR_BLACK);
 	set_attribute(ATR_NORMAL);
-	for (int i = GRID_YCOORD; i < GRID_YCOORD + GRID_HEIGHT; i++)
-		for (int j = GRID_XCOORD; j < GRID_XCOORD + GRID_WIDTH; j++)
+	for (int i = e.field_coord.y; i < e.field_coord.y + e.field_size.height; i++)
+		for (int j = e.field_coord.x; j < e.field_coord.x + e.field_size.width; j++)
 		{
 			set_position(i, j);
 			printf("%c%c", ' ', ' ');
@@ -48,8 +51,8 @@ static void		draw_next_back(void)
 	set_char_color(CLR_BLACK);
 	set_back_color(CLR_BLACK);
 	set_attribute(ATR_NORMAL);
-	for (int i = NEXT_YCOORD; i < NEXT_YCOORD + NEXT_HEIGHT; i++)
-		for (int j = NEXT_XCOORD; j < NEXT_XCOORD + NEXT_WIDTH; j++)
+	for (int i = e.next_coord.y; i < e.next_coord.y + NEXT_HEIGHT; i++)
+		for (int j = e.next_coord.x; j < e.next_coord.x + NEXT_WIDTH; j++)
 		{
 			set_position(i, j);
 			printf("%c%c", ' ', ' ');
@@ -63,8 +66,8 @@ static void		draw_score_back(void)
 	set_char_color(CLR_BLACK);
 	set_back_color(CLR_BLACK);
 	set_attribute(ATR_NORMAL);
-	for (int i = SCORE_YCOORD; i < SCORE_YCOORD + SCORE_HEIGHT; i++)
-		for (int j = SCORE_XCOORD; j < SCORE_XCOORD + SCORE_WIDTH; j++)
+	for (int i = e.score_coord.y; i < e.score_coord.y + SCORE_HEIGHT; i++)
+		for (int j = e.score_coord.x; j < e.score_coord.x + SCORE_WIDTH; j++)
 		{
 			set_position(i, j);
 			printf("%c%c", ' ', ' ');
@@ -77,7 +80,7 @@ void			draw_background(void)
 	// [ draw background ]
 	clear_terminal();
 	draw_screen_back();
-	draw_grid_back();
+	draw_field_back();
 	draw_next_back();
 	draw_score_back();
 }
@@ -114,37 +117,36 @@ int			draw_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
 	return 0;
 }
 
-void		draw_block_now(t_vars *v)
+void		draw_block_now(void)
 {
-	draw_block(v->block_now, GRID_YCOORD + v->now_y, GRID_XCOORD + v->now_x);
+	draw_block(v.block_now, e.field_coord.y + v.now_y, e.field_coord.x + v.now_x);
 }
 
-void		draw_block_next(t_vars *v)
+void		draw_block_next(void)
 {
-	draw_block(v->block_next, NEXT_YCOORD, NEXT_XCOORD);
+	draw_block(v.block_next, e.next_coord.y, e.next_coord.x);
 }
 
 // -------------------------------------------------------------------------- //
 
-void		draw_grid(t_vars *v)
+void		draw_field(void)
 {
 	// draw screen
-	for (int i = 0; i < GRID_HEIGHT; i++)
-		for (int j = 0; j < GRID_WIDTH; j++)
-			draw_cell(v->grid[i][j], GRID_YCOORD + i, GRID_XCOORD + j);
-	// [ return ;]
-	return;
+	for (int i = 0; i < e.field_size.height; i++)
+		for (int j = 0; j < e.field_size.width; j++)
+			draw_cell(v.field[calc_field_index(i, j)],
+						e.field_coord.y + i, e.field_coord.x + j);
 }
 
-void	draw_score(t_vars *v)
+void	draw_score(void)
 {
 	// [ draw score ]
-	set_position(SCORE_YCOORD, SCORE_XCOORD);
+	set_position(e.score_coord.y, e.score_coord.x);
 	set_char_color(CLR_WHITE);
 	set_back_color(CLR_BLACK);
 	set_attribute(ATR_NORMAL);
 	set_attribute(ATR_BLIGHT);
-	printf("%8d", v->score);
+	printf("%8d", v.score);
 	fflush(stdout);
 
 	// [ return ]
@@ -182,28 +184,28 @@ void		clear_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
 	return;
 }
 
-void		clear_block_prev(t_vars *v)
+void		clear_block_prev(void)
 {
 	// [ clear block_now ]
-	clear_block(v->block_now, GRID_YCOORD + v->prev_y, GRID_XCOORD + v->prev_x);
+	clear_block(v.block_now, e.field_coord.y + v.prev_y, e.field_coord.x + v.prev_x);
 
 	// [ return ]
 	return;
 }
 
-void		clear_block_now(t_vars *v)
+void		clear_block_now(void)
 {
 	// [ clear block_now ]
-	clear_block(v->block_now, GRID_YCOORD + v->now_y, GRID_XCOORD + v->now_x);
+	clear_block(v.block_now, e.field_coord.y + v.now_y, e.field_coord.x + v.now_x);
 
 	// [ return ]
 	return;
 }
 
-void		clear_block_next(t_vars *v)
+void		clear_block_next(void)
 {
 	// [ clear block_next ]
-	clear_block(v->block_next, NEXT_YCOORD, NEXT_XCOORD);
+	clear_block(v.block_next, e.next_coord.y, e.next_coord.x);
 
 	// [ return ]
 	return;

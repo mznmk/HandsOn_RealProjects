@@ -6,15 +6,18 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 10:14:28 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 22:09:52 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/tetris.h"
 
+extern t_envs	e;
+extern t_vars	v;
+
 // ========================================================================== //
 
-static void	set_block(t_cell dest[BLOCK_SIZE][BLOCK_SIZE],
+static void		set_block(t_cell dest[BLOCK_SIZE][BLOCK_SIZE],
 										t_cell src[BLOCK_SIZE][BLOCK_SIZE])
 {
 	for (int i = 0; i < BLOCK_SIZE; i++)
@@ -24,23 +27,23 @@ static void	set_block(t_cell dest[BLOCK_SIZE][BLOCK_SIZE],
 	return;
 }
 
-void		set_new_block_now(t_vars *v, int type)
+void			set_new_block_now(int type)
 {
-	set_block(v->block_now, v->block_type[type]);
+	set_block(v.block_now, v.block_type[type]);
 	// [ return ]
 	return;
 }
 
-void		set_new_block_next(t_vars *v, int type)
+void		set_new_block_next(int type)
 {
-	set_block(v->block_next, v->block_type[type]);
+	set_block(v.block_next, v.block_type[type]);
 	// [ return ]
 	return;
 }
 
 // ========================================================================== //
 
-void		rotate_block(t_vars *v, int y, int x, bool turn_right)
+void			rotate_block(int y, int x, bool turn_right)
 {
 	t_cell	block_tmp[BLOCK_SIZE][BLOCK_SIZE];
 
@@ -49,25 +52,24 @@ void		rotate_block(t_vars *v, int y, int x, bool turn_right)
 		for (int j = 0; j < BLOCK_SIZE; j++)
 		{
 			if (turn_right)
-				block_tmp[j][BLOCK_SIZE - 1 - i] = v->block_now[i][j];
+				block_tmp[j][BLOCK_SIZE - 1 - i] = v.block_now[i][j];
 			else
-				block_tmp[BLOCK_SIZE - 1 - j][i] = v->block_now[i][j];
+				block_tmp[BLOCK_SIZE - 1 - j][i] = v.block_now[i][j];
 		}
 	// judge collision
-	if (judge_collision(v, block_tmp, y, x) != 0)
+	if (judge_collision(block_tmp, y, x) != 0)
 		return;
 	// clear block ( block )
-	clear_block(v->block_now, GRID_YCOORD + y, GRID_XCOORD + x);
+	clear_block(v.block_now, e.field_coord.y + y, e.field_coord.x + x);
 	// copy block ( block_tmp -> block )
-	set_block(v->block_now, block_tmp);
+	set_block(v.block_now, block_tmp);
 	// print block ( rotated block )
-	draw_block(v->block_now, GRID_YCOORD + y, GRID_XCOORD + x);
+	draw_block(v.block_now, e.field_coord.y + y, e.field_coord.x + x);
 }
 
 // ========================================================================== //
 
-int			judge_collision(t_vars *v,
-							t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
+int				judge_collision(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
 {
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
@@ -75,60 +77,61 @@ int			judge_collision(t_vars *v,
 			if (block[i][j].c == '\0')
 				continue;
 			else
-				if (check_cell(v, block[i][j], y + i, x + j))
+				if (check_cell(block[i][j], y + i, x + j))
 					return -1;
 		}
 	
 	return 0;
 }
 
-void		fix_block_to_grid(t_vars *v, int y, int x)
+void			fix_block_to_field(int y, int x)
 {
-	// [ fix block to grid ]
+	// [ fix block to field ]
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
-		if (check_cell(v, v->block_now[i][j], y + i, x + j) == 0)
-			v->grid[y+i][x+j] = v->block_now[i][j];
+		if (check_cell(v.block_now[i][j], y + i, x + j) == 0)
+			v.field[calc_field_index(y+i, x+j)] = v.block_now[i][j];
 	
 	// [ return ]
 	return;
 }
 
-static int		check_line(t_vars *v, int y)
+static int		check_line(int y)
 {
 	// all cells filled in line ?
-	for (int j = 0; j < GRID_WIDTH; j++)
-		if (v->grid[y][j].c == '\0')	// fail ?
+	for (int j = 0; j < e.field_size.width; j++)
+		if (v.field[calc_field_index(y, j)].c == '\0')	// fail ?
 			return -1;
 	// return
 	return 0;
 }
 
-static void		erase_line(t_vars *v, int y)
+static void		erase_line(int y)
 {
 	// [ erase line from bottom to top ]
 	for (int i = y; i > 0; i--)
-		for (int j = 0; j < GRID_WIDTH; j++)
-			v->grid[i][j] = v->grid[i-1][j];
+		for (int j = 0; j < e.field_size.width; j++)
+			v.field[calc_field_index(i, j)]
+				= v.field[calc_field_index(i-1, j)];
 	
 	// [ redraw screen ]
 	// set_back_color(CLR_BLACK);
 	// clear_terminal();
 	draw_background();
-	draw_grid(v);
+	draw_field();
 
 	// [ return ]
 	return;
 }
 
-void			erase_lines(t_vars *v)
+void			erase_lines(void)
 {
 	// [ need to erase line ? ]
 	int erase_count = 0;
-	for (int i = 0; i < GRID_HEIGHT; i++)
-		if (check_line(v, i) == 0)
+	for (int i = 0; i < e.field_size.height; i++)
+		if (check_line(i) == 0)
 		{
-			erase_line(v, i);
+			erase_line(i);
 			erase_count++;
 		}
 
@@ -136,19 +139,19 @@ void			erase_lines(t_vars *v)
 	switch (erase_count)
 	{
 		case 1:
-			v->score += ERASE_1LINE;
+			v.score += ERASE_1LINE;
 			break;
 		case 2:
-			v->score += ERASE_2LINE;
+			v.score += ERASE_2LINE;
 			break;
 		case 3:
-			v->score += ERASE_3LINE;
+			v.score += ERASE_3LINE;
 			break;
 		case 4:
-			v->score += ERASE_4LINE;
+			v.score += ERASE_4LINE;
 			break;
 	}
-	draw_score(v);
+	draw_score();
 
 	// [ return ]
 	return;
