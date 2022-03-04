@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 04:02:20 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 06:26:59 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,55 @@
 ** @param	use_seed	use "random seed"
 ** @return				index of block_type
 */
-static int		choose_random_type(bool change_seed)
+static int		choose_random_type(bool use_seed)
 {
 	// [ create random number ]
 	int rnd;
-	if (change_seed)
+	if (use_seed)
 		srand((unsigned int)time(NULL));
 	rnd = rand() % BLOCK_NUM;
 
 	// [ return ]
 	return rnd;
 }
+
+// -------------------------------------------------------------------------- //
+
+static void		init_screen(void)
+{
+	// [ save terminal config (termcap) ]
+	tinit();
+
+	// [ set terminal config ]
+	set_back_color(CLR_BLACK);
+	set_char_color(CLR_WHITE);
+	set_attribute(ATR_NORMAL);
+	clear_terminal();
+	cursol_off();
+
+	// [ return ]
+	return;
+}
+
+// -------------------------------------------------------------------------- //
+
+static void		reset_screen(void)
+{
+	// [ reset terminal config ]
+	set_back_color(CLR_BLACK);
+	set_char_color(CLR_WHITE);
+	set_attribute(ATR_NORMAL);
+	clear_terminal();
+	cursol_on();
+
+	// [ load terminal config (termcap) ]
+	tfinal();
+
+	// [ return ]
+	return;
+}
+
+// -------------------------------------------------------------------------- //
 
 /*!
 ** @brief	assign process, when key is pressed
@@ -50,7 +88,7 @@ static void		move_block(t_vars *v, unsigned long keycode)
 	else if (keycode == KEY_ARROW_DOWN || keycode == 's')
 	{
 		// move block to bottom
-		while (check_grid(v, v->now_y + 1, v->now_x) == 0)
+		while (judge_collision(v, v->block_now, v->now_y + 1, v->now_x) == 0)
 			v->now_y++;
 		// update score (drop point)
 		v->score += v->now_y - v->prev_y;
@@ -59,16 +97,18 @@ static void		move_block(t_vars *v, unsigned long keycode)
 	else if (keycode == KEY_ARROW_LEFT || keycode == 'a')
 	{
 		// move block to left
-		if (check_grid(v, v->now_y, v->now_x - 1) == 0)
+		if (judge_collision(v, v->block_now, v->now_y, v->now_x - 1) == 0)
 			v->now_x--;
 	}
 	else if (keycode == KEY_ARROW_RIGHT || keycode == 'd')
 	{
 		// move block to right
-		if (check_grid(v, v->now_y, v->now_x + 1) == 0)
+		if (judge_collision(v, v->block_now, v->now_y, v->now_x + 1) == 0)
 			v->now_x++;
 	}
 }
+
+// -------------------------------------------------------------------------- //
 
 /*!
 ** @brief	game loop (tetris game loop)
@@ -91,10 +131,10 @@ static void	game_loop(t_vars *v)
 	draw_background();
 	// create next block
 	rnd_now = choose_random_type(true);
-	set_block_now(v, rnd_now);
+	set_new_block_now(v, rnd_now);
 	draw_block_now(v);
 	rnd_next = choose_random_type(false);
-	set_block_next(v, rnd_next);
+	set_new_block_next(v, rnd_next);
 	draw_block_next(v);
 	draw_score(v);
 
@@ -124,7 +164,7 @@ static void	game_loop(t_vars *v)
 		if (LOOP_DURATION < v->duration)
 		{
 			// can move block to bottom ?
-			if (check_grid(v, v->now_y + 1, v->now_x) == 0)
+			if (judge_collision(v, v->block_now,v->now_y + 1, v->now_x) == 0)
 				// [ can move block to bottom ]
 				v->now_y++;
 			else
@@ -143,11 +183,11 @@ static void	game_loop(t_vars *v)
 				v->prev_y = START_YCOORD;
 				v->prev_x = START_XCOORD;
 				rnd_now = rnd_next;
-				set_block_now(v, rnd_now);
+				set_new_block_now(v, rnd_now);
 				draw_block_now(v);
-				rnd_next = choose_random_type(true);
+				rnd_next = choose_random_type(false);
 				clear_block_next(v);
-				set_block_next(v, rnd_next);
+				set_new_block_next(v, rnd_next);
 				draw_block_next(v);				
 			}
 			v->prev_time = v->now_time;
@@ -163,18 +203,7 @@ static void	game_loop(t_vars *v)
 	}
 }
 
-/*!
-** @brief	exit tetris (other exit point)
-** @return	status
-*/
-int		exit_tetris(void)
-{
-	// [ finalize tetris ]
-	reset_screen();
-
-	// [ return (exit point) ]
-	exit(0);
-}
+// -------------------------------------------------------------------------- //
 
 /*!
 ** @brief	main (tetris entry point)
@@ -200,4 +229,19 @@ int	main(int argc, char **argv)
 
 	// [ return ]
 	return 0;
+}
+
+// ========================================================================== //
+
+/*!
+** @brief	exit tetris (other exit point)
+** @return	status
+*/
+int		exit_tetris(void)
+{
+	// [ finalize tetris ]
+	reset_screen();
+
+	// [ return (exit point) ]
+	exit(0);
 }

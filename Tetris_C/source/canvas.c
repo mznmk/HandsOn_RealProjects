@@ -6,23 +6,11 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 04:34:00 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 06:12:18 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/tetris.h"
-
-// ========================================================================== //
-
-static int	is_cell_filled(t_cell cell)
-{
-	// [ cell is filled ? ]
-	if (cell.c == '\0')
-		return -1;
-	return 0;
-}
-
-// ========================================================================== //
 
 static void		draw_screen_back(void)
 {
@@ -102,7 +90,7 @@ int			draw_cell(t_cell cell, int y, int x)
 	// 	return -1;
 
 	// [ cell is filled ? ]
-	if (is_cell_filled(cell) == -1)
+	if (is_filled_cell(cell) == -1)
 		return -1;
 
 	// [ print cell ]
@@ -168,7 +156,7 @@ void	draw_score(t_vars *v)
 int			clear_cell(t_cell cell, int y, int x)
 {
 	// [ cell is filled ]
-	if (is_cell_filled(cell) == -1)
+	if (is_filled_cell(cell) == -1)
 		return -1;
 
 	// [ clear cell ]

@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 04:32:51 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 06:31:32 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,10 @@ int				tfinal(void);
 // init.c
 void			init_vars(t_vars *v);
 
-// screen.c
-void			init_screen(void);
-void			reset_screen(void);
+// utils.c
+int				is_filled_cell(t_cell cell);
+int	check_range(t_cell cell, int y, int x);
+int	check_cell(t_vars *v, t_cell cell_self, int y, int x);
 
 // canvas.c
 void			draw_background(void);
@@ -180,11 +181,12 @@ void			clear_block_now(t_vars *v);
 void			clear_block_next(t_vars *v);
 
 // block.c
-void			set_block_now(t_vars *v, int type);
-void			set_block_next(t_vars *v, int type);
+void			set_new_block_now(t_vars *v, int type);
+void			set_new_block_next(t_vars *v, int type);
 void			rotate_block(t_vars *v, int y, int x, bool turn_right);
 
-int				check_grid(t_vars *v, int y, int x);
+int				judge_collision(t_vars *v,
+							t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
 void			fix_block_to_grid(t_vars *v, int y, int x);
 void			erase_lines(t_vars *v);
 

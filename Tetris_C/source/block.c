@@ -6,38 +6,11 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 04:12:42 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 06:31:37 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/tetris.h"
-
-// static int	is_cell_in_grid(t_cell cell, int y, int x)
-// {
-// 	// [ cell is in grid ? ]
-// 	if ((0 <= y && y < GRID_HEIGHT) && (0 <= x && x < GRID_WIDTH))
-// 		return 0;
-// 	else
-// 		return -1;
-// }
-
-static int	check_range(t_cell cell, int y, int x)
-{
-	if (cell.c == '\0')
-		return -1;
-	if ((0 <= y && y < GRID_HEIGHT) && (0 <= x && x < GRID_WIDTH))
-		return 0;
-	else
-		return -1;
-}
-
-static int	check_cell(t_vars *v, t_cell cell, int y, int x)
-{
-	if (check_range(cell, y, x) || v->grid[y][x].c != '\0')
-		return -1;
-
-	return 0;
-}
 
 // ========================================================================== //
 
@@ -51,14 +24,14 @@ static void	set_block(t_cell dest[BLOCK_SIZE][BLOCK_SIZE],
 	return;
 }
 
-void		set_block_now(t_vars *v, int type)
+void		set_new_block_now(t_vars *v, int type)
 {
 	set_block(v->block_now, v->block_type[type]);
 	// [ return ]
 	return;
 }
 
-void		set_block_next(t_vars *v, int type)
+void		set_new_block_next(t_vars *v, int type)
 {
 	set_block(v->block_next, v->block_type[type]);
 	// [ return ]
@@ -80,27 +53,29 @@ void		rotate_block(t_vars *v, int y, int x, bool turn_right)
 			else
 				block_tmp[BLOCK_SIZE - 1 - j][i] = v->block_now[i][j];
 		}
+	// judge collision
+	if (judge_collision(v, block_tmp, y, x) != 0)
+		return;
 	// clear block ( block )
 	clear_block(v->block_now, y, x);
 	// copy block ( block_tmp -> block )
 	set_block(v->block_now, block_tmp);
 	// print block ( rotated block )
 	draw_block(v->block_now, y, x);
-
-	return;
 }
 
 // ========================================================================== //
 
-int			check_grid(t_vars *v, int y, int x)
+int			judge_collision(t_vars *v,
+							t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
 {
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
 		{
-			if (v->block_now[i][j].c == '\0')
+			if (block[i][j].c == '\0')
 				continue;
 			else
-				if (check_cell(v, v->block_now[i][j], y + i, x + j))
+				if (check_cell(v, block[i][j], y + i, x + j))
 					return -1;
 		}
 	
