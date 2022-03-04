@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 00:42:04 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 02:21:58 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,6 @@ typedef struct		s_coord
 typedef struct		s_envs
 {
 	t_size			term_size;
-	// t_size			back_size_max;
-	// t_size			back_size_min;
 	t_size			back_size;
 	t_size			field_size;
 	t_size			field_size_max;
@@ -186,8 +184,8 @@ typedef struct		s_vars
 
 // int				errno;
 t_envs			e;
-struct termios	otty;
-struct termios	ntty;
+// struct termios	otty;
+// struct termios	ntty;
 t_vars			v;
 
 // ========================= prototype declaration ========================== //
