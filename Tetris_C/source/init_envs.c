@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 12:48:55 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 01:13:55 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 02:19:08 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static void		set_coord(void)
 	e.score_coord.x = e.next2_coord.x;
 
 	// [ set start coord ]
-	e.start_coord.y = 0;
+	e.start_coord.y = e.field_coord.y;
 	e.start_coord.x = e.field_coord.x + e.field_size.width / 2 - 2;
 }
 

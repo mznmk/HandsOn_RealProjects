@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 01:49:55 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 02:15:45 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ static void		draw_screen_back(void)
 			printf("%c%c", '#', '#');
 			fflush(stdout);
 		}
+	set_char_color(CLR_DEFAULT);
+	set_back_color(CLR_DEFAULT);
+	set_attribute(ATR_NORMAL);
 }
 
 static void		draw_field_back(void)
@@ -43,6 +46,9 @@ static void		draw_field_back(void)
 			printf("%c%c", ' ', ' ');
 			fflush(stdout);
 		}
+	set_char_color(CLR_DEFAULT);
+	set_back_color(CLR_DEFAULT);
+	set_attribute(ATR_NORMAL);
 }
 
 static void		draw_next_back(void)
@@ -61,6 +67,9 @@ static void		draw_next_back(void)
 			printf("%c%c", ' ', ' ');
 			fflush(stdout);
 		}
+	set_char_color(CLR_DEFAULT);
+	set_back_color(CLR_DEFAULT);
+	set_attribute(ATR_NORMAL);
 }
 
 static void		draw_score_back(void)
@@ -76,6 +85,9 @@ static void		draw_score_back(void)
 			printf("%c%c", ' ', ' ');
 		}
 	fflush(stdout);
+	set_char_color(CLR_DEFAULT);
+	set_back_color(CLR_DEFAULT);
+	set_attribute(ATR_NORMAL);
 }
 
 void			draw_background(void)
@@ -106,6 +118,9 @@ int			draw_cell(t_cell cell, int y, int x)
 	set_attribute(cell.attribute);
 	printf("%c%c", cell.c, cell.c);
 	fflush(stdout);
+	set_char_color(CLR_DEFAULT);
+	set_back_color(CLR_DEFAULT);
+	set_attribute(ATR_NORMAL);
 	
 	// [ return ]
 	return 0;
@@ -154,6 +169,9 @@ void	draw_score(void)
 	set_position(e.score_coord.y + 1, e.score_coord.x);
 	printf("%8d", v.score);
 	fflush(stdout);
+	set_char_color(CLR_DEFAULT);
+	set_back_color(CLR_DEFAULT);
+	set_attribute(ATR_NORMAL);
 
 	// [ return ]
 	return;	
@@ -174,6 +192,9 @@ int			clear_cell(t_cell cell, int y, int x)
 	set_attribute(ATR_NORMAL);
 	printf("  ");
 	fflush(stdout);
+	set_char_color(CLR_DEFAULT);
+	set_back_color(CLR_DEFAULT);
+	set_attribute(ATR_NORMAL);
 
 	// [ return ]
 	return 0;
