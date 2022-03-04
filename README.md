@@ -1,10 +1,10 @@
 # HandsOn Game
 
-Game Programming の学習記録  
+いろんなハンズオンに取り組みながら、ゲームプログラミングを学習しようという試みです。  
 
 
 ## Tetris_C
 
-テトリスを作ろう  
-http://www3.nit.ac.jp/~tamura/pdf/tetris.pdf  
+テトリスを作りました！  
+[Tetris_C](https://github.com/mznmk/HandsOn_Game/tree/master/Tetris_C)  
 
