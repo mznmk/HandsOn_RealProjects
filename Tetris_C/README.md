@@ -26,7 +26,6 @@
 git clone https://github.com/mznmk/HandsOn_Game.git
 ```
 
-
 ### 起動方法
 
 1. Makefile があるディレクトリ（このディレクトリ）で、実行ファイルを作成します。  
@@ -119,3 +118,4 @@ https://qiita.com/supaiku2452/items/10772cbd2706dede06b9
 
 Linux シグナルの基本と仕組み (カーネル v5.5 時点)   
 https://qiita.com/Kernel_OGSun/items/e96cef5487e25517a576  
+
