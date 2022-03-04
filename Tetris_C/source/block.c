@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 06:31:37 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 10:14:28 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ void		rotate_block(t_vars *v, int y, int x, bool turn_right)
 	if (judge_collision(v, block_tmp, y, x) != 0)
 		return;
 	// clear block ( block )
-	clear_block(v->block_now, y, x);
+	clear_block(v->block_now, GRID_YCOORD + y, GRID_XCOORD + x);
 	// copy block ( block_tmp -> block )
 	set_block(v->block_now, block_tmp);
 	// print block ( rotated block )
-	draw_block(v->block_now, y, x);
+	draw_block(v->block_now, GRID_YCOORD + y, GRID_XCOORD + x);
 }
 
 // ========================================================================== //

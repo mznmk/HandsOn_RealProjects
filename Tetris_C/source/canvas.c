@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/04 06:12:18 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/04 10:08:45 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,14 @@ int			draw_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
 {
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
-			draw_cell(block[i][j], GRID_YCOORD + y + i, GRID_XCOORD + x + j);
+			draw_cell(block[i][j], y + i, x + j);
 
 	return 0;
 }
 
 void		draw_block_now(t_vars *v)
 {
-	draw_block(v->block_now, v->now_y, v->now_x);
+	draw_block(v->block_now, GRID_YCOORD + v->now_y, GRID_XCOORD + v->now_x);
 }
 
 void		draw_block_next(t_vars *v)
@@ -176,7 +176,7 @@ void		clear_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
 	// [ clear block ]
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
-			clear_cell(block[i][j], GRID_YCOORD + y + i, GRID_XCOORD + x + j);
+			clear_cell(block[i][j], y + i, x + j);
 
 	// [ return ]
 	return;
@@ -185,7 +185,7 @@ void		clear_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
 void		clear_block_prev(t_vars *v)
 {
 	// [ clear block_now ]
-	clear_block(v->block_now, v->prev_y, v->prev_x);
+	clear_block(v->block_now, GRID_YCOORD + v->prev_y, GRID_XCOORD + v->prev_x);
 
 	// [ return ]
 	return;
@@ -194,7 +194,7 @@ void		clear_block_prev(t_vars *v)
 void		clear_block_now(t_vars *v)
 {
 	// [ clear block_now ]
-	clear_block(v->block_now, v->now_y, v->now_x);
+	clear_block(v->block_now, GRID_YCOORD + v->now_y, GRID_XCOORD + v->now_x);
 
 	// [ return ]
 	return;
