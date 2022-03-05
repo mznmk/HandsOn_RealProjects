@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 12:14:16 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 12:37:26 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static void		move_block(unsigned long keycode)
 {
 	// rotate block to left
 	if (keycode == KEY_ARROW_UP || keycode == 'w' ||
-		keycode == '0' || keycode == ',')
+		keycode == '0' || keycode == 'j')
 	{
 		rotate_block(v.now_y, v.now_x, false);
 	}
 	// rotate block to right
-	else if (keycode == '.')
+	else if (keycode == '.' || keycode == 'k')
 	{
 		rotate_block(v.now_y, v.now_x, true);
 	}
@@ -65,15 +65,6 @@ static void		game_loop(void)
 	// [ variables ]
 	int rnd_now, rnd_next1, rnd_next2;
 	unsigned long	keycode;
-
-	// [ set parameter ]
-	// v.score = 0;
-	// v.prev_y = 0;
-	// v.prev_x = 0;
-	// v.now_y = e.start_coord.y;
-	// v.now_x = e.start_coord.x;
-	// v.fall_time_max = FALL_TIME_MAX;
-	// v.fall_speed = FALL_SPEED_BASE;
 
 	// [ draw game screen ]
 	draw_background();
