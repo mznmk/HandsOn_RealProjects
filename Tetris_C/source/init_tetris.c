@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 10:56:39 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 11:43:10 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 11:56:44 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,7 @@ void			init_tetris(int argc, char **argv)
 	set_attribute(ATR_NORMAL);
 	clear_terminal();
 	cursol_off();
+
+	// [ create random number ]
+	srand((unsigned int)time(NULL));
 }

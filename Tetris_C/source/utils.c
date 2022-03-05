@@ -6,13 +6,24 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 05:38:47 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 02:36:58 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 12:12:24 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/tetris.h"
 
 extern t_vars	v;
+
+/*!
+** @brief		choose random
+** @param		size (choose range size)
+** @return		random number
+*/
+int				choose_random(int size)
+{
+	// [ return ]
+	return rand() % size;
+}
 
 int				is_filled_cell(t_cell cell)
 {

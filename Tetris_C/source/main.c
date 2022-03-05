@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 11:39:05 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 12:14:16 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,59 +16,40 @@ extern t_envs	e;
 extern t_vars	v;
 
 /*!
-** @brief	choose random type (for choose now/next block)	
-** @param	use_seed	use "random seed"
-** @return				index of block_type
-*/
-static int		choose_random_type(bool use_seed)
-{
-	// [ create random number ]
-	int rnd;
-	if (use_seed)
-		srand((unsigned int)time(NULL));
-	rnd = rand() % BLOCK_NUM;
-
-	// [ return ]
-	return rnd;
-}
-
-// -------------------------------------------------------------------------- //
-
-/*!
 ** @brief	assign process, when key is pressed
 ** @param	keycode	pressed keycode
 */
 static void		move_block(unsigned long keycode)
 {
+	// rotate block to left
 	if (keycode == KEY_ARROW_UP || keycode == 'w' ||
 		keycode == '0' || keycode == ',')
 	{
-		// rotate block to left
 		rotate_block(v.now_y, v.now_x, false);
 	}
+	// rotate block to right
 	else if (keycode == '.')
 	{
-		// rotate block to right
 		rotate_block(v.now_y, v.now_x, true);
 	}
+	// move block to bottom
 	else if (keycode == KEY_ARROW_DOWN || keycode == 's')
 	{
-		// move block to bottom
 		while (judge_collision(v.block_now, v.now_y + 1, v.now_x) == 0)
 			v.now_y++;
 		// update score (drop point)
 		v.score += v.now_y - v.prev_y;
 		draw_score();
 	}
+	// move block to left
 	else if (keycode == KEY_ARROW_LEFT || keycode == 'a')
 	{
-		// move block to left
 		if (judge_collision(v.block_now, v.now_y, v.now_x - 1) == 0)
 			v.now_x--;
 	}
+	// move block to right
 	else if (keycode == KEY_ARROW_RIGHT || keycode == 'd')
 	{
-		// move block to right
 		if (judge_collision(v.block_now, v.now_y, v.now_x + 1) == 0)
 			v.now_x++;
 	}
@@ -97,11 +78,11 @@ static void		game_loop(void)
 	// [ draw game screen ]
 	draw_background();
 	// create next block
-	rnd_now = choose_random_type(true);
+	rnd_now = choose_random(BLOCK_NUM);
 	set_new_block_now(rnd_now);
 	draw_block_now();
-	rnd_next1 = choose_random_type(false);
-	rnd_next2 = choose_random_type(false);
+	rnd_next1 = choose_random(BLOCK_NUM);
+	rnd_next2 = choose_random(BLOCK_NUM);
 	set_new_block_next(rnd_next1, rnd_next2);
 	draw_block_next();
 	draw_score();
@@ -154,7 +135,7 @@ static void		game_loop(void)
 				set_new_block_now(rnd_now);
 				draw_block_now();
 				rnd_next1 = rnd_next2;
-				rnd_next2 = choose_random_type(false);
+				rnd_next2 = choose_random(BLOCK_NUM);
 				clear_block_next();
 				set_new_block_next(rnd_next1, rnd_next2);
 				draw_block_next();				

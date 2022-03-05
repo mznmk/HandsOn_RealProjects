@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 05:05:34 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 12:32:57 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@ extern t_vars	v;
 
 static void		set_random_color(void)
 {
-	int		rnd;
-	rnd = rand() % 8;		// 0 - 7
-	set_char_color(rnd);
-	rnd = rand() % 8;		// 0 - 7
-	set_back_color(rnd);
+	int		rnd1;
+	int		rnd2;
+	// [ set char color ]
+	rnd1 = CLR_BLACK;
+	// rnd1 = choose_random(BLOCK_NUM);
+	set_char_color(rnd1);
+	// [ set back color ]
+	do
+		rnd2 = choose_random(BLOCK_NUM);
+	while (rnd1 == rnd2);
+	set_back_color(rnd2);
 }
 
 static void		draw_screen_back(void)

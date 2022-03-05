@@ -121,7 +121,7 @@ Truty の感覚が異なるかもしれません。
 
 ## 参考資料
 
-テトリスを作ろう  
+テトリスを作ろう(テキスト)  
 http://www3.nit.ac.jp/~tamura/pdf/tetris.pdf  
 
 
@@ -130,6 +130,9 @@ http://www.ritsumei.ac.jp/~mmr14135/johoWeb/cmnds.html
 
 C言語 extern宣言とグローバル変数【宣言不要な設計手法】  
 https://monozukuri-c.com/langc-funclist-extern/  
+
+C言語 乱数の生成【randとsrandを使ったサンプルコード】  
+https://monozukuri-c.com/langc-funclist-rand/  
 
 
 C言語で２次元配列を動的に割り当てる４つの方法  
