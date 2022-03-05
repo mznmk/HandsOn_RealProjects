@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 12:48:55 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 08:36:23 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 12:51:44 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void		get_terminal_size(void)
 	}
 }
 
-static void		set_aveilable_field_size_range(void)
+static void		set_available_field_size_range(void)
 {
 	// [ set field_size (min) ]
 	e.field_size_min.height = NEXT_HEIGHT * 2 + SCORE_HEIGHT + 2;
@@ -64,13 +64,19 @@ static void		set_field_size(int argc, char **argv)
 		e.field_size.width = e.field_size_max.width;
 }
 
+/**
+ * @brief		set size (back/field/next/score)
+** @param		argc	argument count
+** @param		argv	argument contents
+** @return		none
+ */
 static void		set_size(int argc, char **argv)
 {
 	// [ get terminal size ]
 	get_terminal_size();
 
 	// [ set aveilable field size range ]
-	set_aveilable_field_size_range();
+	set_available_field_size_range();
 
 	// [ set field size ]
 	set_field_size(argc, argv);
@@ -92,6 +98,10 @@ static void		set_size(int argc, char **argv)
 
 // -------------------------------------------------------------------------- //
 
+/**
+ * @brief		set coord (back/field/next/score/start)
+** @return		none
+ */
 static void		set_coord(void)
 {
 	// [ set back coord ]
@@ -132,6 +142,12 @@ static void		set_param_fall_speed_up(int argc, char **argv)
 		v.fall_speed = FALL_SPEED_BASE * (FALL_SPEED_MIN + FALL_SPEED_MAX) / 2;
 }
 
+/**
+ * @brief		set game parameter
+** @param		argc	argument count
+** @param		argv	argument contents
+** @return		none
+ */
 static void		set_param(int argc, char **argv)
 {
 	// [ set score ]
@@ -146,8 +162,15 @@ static void		set_param(int argc, char **argv)
 	// [ fall speed ]
 	set_param_fall_speed_up(argc, argv);
 }
+
 // -------------------------------------------------------------------------- //
 
+/**
+ * @brief		initialize environment variables
+** @param		argc	argument count
+** @param		argv	argument contents
+** @return		none
+ */
 void			init_envs(int argc, char **argv)
 {
 	// [ set field/next/score/back size ]

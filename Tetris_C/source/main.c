@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 12:37:26 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 13:14:13 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,18 @@ static void		move_block(unsigned long keycode)
 static void		game_loop(void)
 {
 	// [ variables ]
-	int rnd_now, rnd_next1, rnd_next2;
+	// int rnd_now, rnd_next1, rnd_next2;
 	unsigned long	keycode;
 
 	// [ draw game screen ]
 	draw_background();
 	// create next block
-	rnd_now = choose_random(BLOCK_NUM);
-	set_new_block_now(rnd_now);
+	v.now_rnd = choose_random(BLOCK_NUM);
+	set_new_block_now(v.now_rnd);
 	draw_block_now();
-	rnd_next1 = choose_random(BLOCK_NUM);
-	rnd_next2 = choose_random(BLOCK_NUM);
-	set_new_block_next(rnd_next1, rnd_next2);
+	v.next1_rnd = choose_random(BLOCK_NUM);
+	v.next2_rnd = choose_random(BLOCK_NUM);
+	set_new_block_next(v.next1_rnd, v.next2_rnd);
 	draw_block_next();
 	draw_score();
 
@@ -122,14 +122,14 @@ static void		game_loop(void)
 				v.now_x = e.start_coord.x;
 				v.prev_y = e.start_coord.y;
 				v.prev_x = e.start_coord.x;
-				rnd_now = rnd_next1;
-				set_new_block_now(rnd_now);
+				v.now_rnd = v.next1_rnd;
+				set_new_block_now(v.now_rnd);
 				draw_block_now();
-				rnd_next1 = rnd_next2;
-				rnd_next2 = choose_random(BLOCK_NUM);
+				v.next1_rnd = v.next2_rnd;
+				v.next2_rnd = choose_random(BLOCK_NUM);
 				clear_block_next();
-				set_new_block_next(rnd_next1, rnd_next2);
-				draw_block_next();				
+				set_new_block_next(v.next1_rnd, v.next2_rnd);
+				draw_block_next();
 			}
 			v.prev_time = v.now_time;
 		}
