@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   block.c                                            :+:      :+:    :+:   */
+/*   move_block.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 18:45:14 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 00:12:36 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 extern t_envs	e;
 extern t_vars	v;
 
-// ========================================================================== //
-
+/**
+ * @brief		set new block to now/next block
+ * @param		dest	copy destination
+ * @param		src		copy source
+ */
 static void		set_block(t_cell dest[BLOCK_SIZE][BLOCK_SIZE],
 										t_cell src[BLOCK_SIZE][BLOCK_SIZE])
 {
@@ -25,28 +28,70 @@ static void		set_block(t_cell dest[BLOCK_SIZE][BLOCK_SIZE],
 			dest[i][j] = src[i][j];
 }
 
+/**
+ * @brief		set new block to now block
+ * @param		type	block_type index
+ */
 void			set_new_block_now(int type)
 {
 	set_block(v.block_now, v.block_type[type]);
 }
 
+/**
+ * @brief		set new block to next block
+ * @param		type	block_type index
+ */
 void		set_new_block_next(int type1, int type2)
 {
 	set_block(v.block_next1, v.block_type[type1]);
 	set_block(v.block_next2, v.block_type[type2]);
 }
 
-// ========================================================================== //
+// -------------------------------------------------------------------------- //
 
-void			rotate_block(int y, int x, bool turn_right)
+/**
+ * @brief		judge collision
+ * 
+ * @param		block	to be judged
+ * @param		y		block coord y
+ * @param		x		block coord x
+ * @return		true (no collision): 0 / false (collision): -1
+ */
+int				judge_collision(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
 {
+	// [ judge collision ]
+	for (int i = 0; i < BLOCK_SIZE; i++)
+		for (int j = 0; j < BLOCK_SIZE; j++)
+		{
+			if (block[i][j].c == '\0')
+				continue;
+			else
+				if (check_cell(block[i][j], y + i, x + j))
+					return -1;
+		}
+	// [ return ]
+	return 0;
+}
+
+// -------------------------------------------------------------------------- //
+
+/**
+ * @brief		rotate block if can move
+ * @param		y				block coord y
+ * @param		x				block coord x
+ * @param		rotate_right	true: rotate right / false: rotate left
+ */
+void			rotate_block(int y, int x, bool rotate_right)
+{
+	// [ variable ]
 	t_cell	block_tmp[BLOCK_SIZE][BLOCK_SIZE];
 
+	// [ rotate block ]
 	// rotate & copy block ( block -> block_tmp )
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
 		{
-			if (turn_right)
+			if (rotate_right)
 				block_tmp[j][BLOCK_SIZE - 1 - i] = v.block_now[i][j];
 			else
 				block_tmp[BLOCK_SIZE - 1 - j][i] = v.block_now[i][j];
@@ -62,23 +107,13 @@ void			rotate_block(int y, int x, bool turn_right)
 	draw_block(v.block_now, e.field_coord.y + y, e.field_coord.x + x);
 }
 
-// ========================================================================== //
+// -------------------------------------------------------------------------- //
 
-int				judge_collision(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
-{
-	for (int i = 0; i < BLOCK_SIZE; i++)
-		for (int j = 0; j < BLOCK_SIZE; j++)
-		{
-			if (block[i][j].c == '\0')
-				continue;
-			else
-				if (check_cell(block[i][j], y + i, x + j))
-					return -1;
-		}
-	
-	return 0;
-}
-
+/**
+ * @brief		write block data to field
+ * @param		y	block coord y
+ * @param		x	block coord x
+ */
 void			fix_block_to_field(int y, int x)
 {
 	// [ fix block to field ]
@@ -86,18 +121,22 @@ void			fix_block_to_field(int y, int x)
 		for (int j = 0; j < BLOCK_SIZE; j++)
 		if (check_cell(v.block_now[i][j], y + i, x + j) == 0)
 			v.field[conv_field_coord(y+i, x+j)] = v.block_now[i][j];
-	
-	// [ return ]
-	return;
 }
 
-static int		check_line(int y)
+// -------------------------------------------------------------------------- //
+
+/**
+ * @brief		judge if need to erase line
+ * @param		y	line coord y
+ * @return		true (need to erase): 0 / false (need not to erase): -1
+ */
+static int		need_to_erase_line(int y)
 {
 	// all cells filled in line ?
 	for (int j = 0; j < e.field_size.width; j++)
-		if (v.field[conv_field_coord(y, j)].c == '\0')	// fail ?
+		if (v.field[conv_field_coord(y, j)].c == '\0')
 			return -1;
-	// return
+	// [ return ]
 	return 0;
 }
 
@@ -110,8 +149,6 @@ static void		erase_line(int y)
 				= v.field[conv_field_coord(i-1, j)];
 	
 	// [ redraw screen ]
-	// set_back_color(CLR_BLACK);
-	// clear_terminal();
 	draw_back();
 	draw_field();
 
@@ -119,12 +156,15 @@ static void		erase_line(int y)
 	return;
 }
 
+/**
+ * @brief		erase lines if filled by cell
+ */
 void			erase_lines(void)
 {
 	// [ need to erase line ? ]
 	int erase_count = 0;
 	for (int i = 0; i < e.field_size.height; i++)
-		if (check_line(i) == 0)
+		if (need_to_erase_line(i) == 0)
 		{
 			erase_line(i);
 			erase_count++;

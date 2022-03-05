@@ -6,7 +6,7 @@
 #    By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 13:17:41 by mmizuno           #+#    #+#              #
-#    Updated: 2022/03/05 19:07:11 by mmizuno          ###   ########.fr        #
+#    Updated: 2022/03/05 23:38:06 by mmizuno          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ TETRIS_SRCNAME		= io.c \
 					  fin_tetris.c \
 					  utils.c \
 					  draw_back.c \
-					  canvas.c \
-					  block.c \
+					  draw_game.c \
+					  move_block.c \
 					  main.c
 TETRIS_SRCS			= $(addprefix $(TETRIS_SRCDIR), $(TETRIS_SRCNAME))
 TETRIS_OBJS			= $(TETRIS_SRCS:.c=.o)

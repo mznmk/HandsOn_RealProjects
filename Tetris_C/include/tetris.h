@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 19:19:06 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 00:15:54 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ int	check_cell(t_cell cell_self, int y, int x);
 // draw_back.c
 void			draw_back(void);
 
-// canvas.c
+// draw_game.c
 void			draw_score(void);
 
 int				draw_cell(t_cell cell, int y, int x);
@@ -212,11 +212,10 @@ void			clear_block_prev(void);
 void			clear_block_now(void);
 void			clear_block_next(void);
 
-// block.c
+// move_block.c
 void			set_new_block_now(int type);
 void			set_new_block_next(int type1, int type2);
-void			rotate_block(int y, int x, bool turn_right);
-
+void			rotate_block(int y, int x, bool rotate_right);
 int				judge_collision(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
 void			fix_block_to_field(int y, int x);
 void			erase_lines(void);

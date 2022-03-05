@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 18:45:18 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 23:18:56 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ static void		press_key(unsigned long keycode)
 			v.now_x++;
 	}
 }
-
-// -------------------------------------------------------------------------- //
 
 static void		set_start_block(void)
 {
