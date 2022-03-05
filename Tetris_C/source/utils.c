@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 05:38:47 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 13:07:30 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 19:18:17 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int				choose_random(int size)
 	return rand() % size;
 }
 
+// -------------------------------------------------------------------------- //
+
 /**
  * @brief		set font color default
  * @return		none
@@ -35,6 +37,19 @@ void			set_font_color_default(void)
 	set_back_color(CLR_DEFAULT);
 	set_attribute(ATR_NORMAL);
 }
+
+/**
+ * @brief		set font color basic
+ * @return		none
+ */
+void			set_font_color_basic(void)
+{
+	set_char_color(CLR_BLACK);
+	set_back_color(CLR_BLACK);
+	set_attribute(ATR_NORMAL);
+}
+
+// -------------------------------------------------------------------------- //
 
 int				is_filled_cell(t_cell cell)
 {

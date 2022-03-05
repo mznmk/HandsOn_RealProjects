@@ -6,7 +6,7 @@
 #    By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 13:17:41 by mmizuno           #+#    #+#              #
-#    Updated: 2022/03/05 11:39:44 by mmizuno          ###   ########.fr        #
+#    Updated: 2022/03/05 19:07:11 by mmizuno          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ TETRIS_SRCNAME		= io.c \
 					  init_tetris.c \
 					  fin_tetris.c \
 					  utils.c \
+					  draw_back.c \
 					  canvas.c \
 					  block.c \
 					  main.c

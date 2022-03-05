@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 18:45:06 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 19:19:06 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,12 +189,15 @@ int				conv_field_coord(int y, int x);
 // utils.c
 int				choose_random(int size);
 void			set_font_color_default(void);
+void			set_font_color_basic(void);
 int				is_filled_cell(t_cell cell);
 int	check_range(t_cell cell, int y, int x);
 int	check_cell(t_cell cell_self, int y, int x);
 
-// canvas.c
+// draw_back.c
 void			draw_back(void);
+
+// canvas.c
 void			draw_score(void);
 
 int				draw_cell(t_cell cell, int y, int x);
