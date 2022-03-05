@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 12:32:57 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 13:30:51 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ static void		draw_screen_back(void)
 			printf("%c%c", '#', '#');
 			fflush(stdout);
 		}
-	set_char_color(CLR_DEFAULT);
-	set_back_color(CLR_DEFAULT);
-	set_attribute(ATR_NORMAL);
+	set_font_color_default();
 }
 
 static void		draw_field_back(void)
@@ -60,9 +58,7 @@ static void		draw_field_back(void)
 			printf("%c%c", ' ', ' ');
 			fflush(stdout);
 		}
-	set_char_color(CLR_DEFAULT);
-	set_back_color(CLR_DEFAULT);
-	set_attribute(ATR_NORMAL);
+	set_font_color_default();
 }
 
 static void		draw_next_back(void)
@@ -81,9 +77,7 @@ static void		draw_next_back(void)
 			printf("%c%c", ' ', ' ');
 			fflush(stdout);
 		}
-	set_char_color(CLR_DEFAULT);
-	set_back_color(CLR_DEFAULT);
-	set_attribute(ATR_NORMAL);
+	set_font_color_default();
 }
 
 static void		draw_score_back(void)
@@ -97,11 +91,9 @@ static void		draw_score_back(void)
 		{
 			set_position(e.score_coord.y + i, e.score_coord.x + j);
 			printf("%c%c", ' ', ' ');
+			fflush(stdout);
 		}
-	fflush(stdout);
-	set_char_color(CLR_DEFAULT);
-	set_back_color(CLR_DEFAULT);
-	set_attribute(ATR_NORMAL);
+	set_font_color_default();
 }
 
 void			draw_background(void)
@@ -132,9 +124,7 @@ int			draw_cell(t_cell cell, int y, int x)
 	set_attribute(cell.attribute);
 	printf("%c%c", cell.c, cell.c);
 	fflush(stdout);
-	set_char_color(CLR_DEFAULT);
-	set_back_color(CLR_DEFAULT);
-	set_attribute(ATR_NORMAL);
+	set_font_color_default();
 	
 	// [ return ]
 	return 0;
@@ -176,16 +166,13 @@ void	draw_score(void)
 	// [ draw score ]
 	set_char_color(CLR_WHITE);
 	set_back_color(CLR_BLACK);
-	set_attribute(ATR_NORMAL);
-	set_attribute(ATR_BLIGHT);
+		set_attribute(ATR_BLIGHT);
 	set_position(e.score_coord.y, e.score_coord.x);
 	printf("score");
 	set_position(e.score_coord.y + 1, e.score_coord.x);
 	printf("%8d", v.score);
 	fflush(stdout);
-	set_char_color(CLR_DEFAULT);
-	set_back_color(CLR_DEFAULT);
-	set_attribute(ATR_NORMAL);
+	set_font_color_default();
 
 	// [ return ]
 	return;	
@@ -206,9 +193,7 @@ int			clear_cell(t_cell cell, int y, int x)
 	set_attribute(ATR_NORMAL);
 	printf("  ");
 	fflush(stdout);
-	set_char_color(CLR_DEFAULT);
-	set_back_color(CLR_DEFAULT);
-	set_attribute(ATR_NORMAL);
+	set_font_color_default();
 
 	// [ return ]
 	return 0;
