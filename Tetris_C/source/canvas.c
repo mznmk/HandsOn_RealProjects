@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 13:30:51 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 18:45:10 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void		draw_score_back(void)
 	set_font_color_default();
 }
 
-void			draw_background(void)
+void			draw_back(void)
 {
 	// [ draw background ]
 	clear_terminal();

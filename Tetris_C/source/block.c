@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 04:54:12 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 18:45:14 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static void		erase_line(int y)
 	// [ redraw screen ]
 	// set_back_color(CLR_BLACK);
 	// clear_terminal();
-	draw_background();
+	draw_back();
 	draw_field();
 
 	// [ return ]

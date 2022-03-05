@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 13:07:21 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 18:45:06 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ int	check_range(t_cell cell, int y, int x);
 int	check_cell(t_cell cell_self, int y, int x);
 
 // canvas.c
-void			draw_background(void);
+void			draw_back(void);
 void			draw_score(void);
 
 int				draw_cell(t_cell cell, int y, int x);
