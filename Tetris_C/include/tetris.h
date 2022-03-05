@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 00:15:54 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 00:51:41 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,15 +198,12 @@ int	check_cell(t_cell cell_self, int y, int x);
 void			draw_back(void);
 
 // draw_game.c
-void			draw_score(void);
 
-int				draw_cell(t_cell cell, int y, int x);
-int				draw_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
+void			draw_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
 void			draw_block_now(void);
 void			draw_block_next(void);
 void			draw_field(void);
-
-int				clear_cell(t_cell cell, int y, int x);
+void			draw_score(void);
 void			clear_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
 void			clear_block_prev(void);
 void			clear_block_now(void);

@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 11:08:05 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 11:39:18 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 00:56:54 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 /**
  * @brief 		load terminal setting (termcap)
- * @return		none
  */
 static void		fin_term(void)
 {
@@ -25,7 +24,6 @@ static void		fin_term(void)
 
 /**
  * @brief		finalize tetris
- * @return		none
  */
 void			fin_tetris(void)
 {

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   canvas.c                                           :+:      :+:    :+:   */
+/*   draw_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 19:06:46 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 00:55:45 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,20 @@
 extern t_envs	e;
 extern t_vars	v;
 
-// -------------------------------------------------------------------------- //
-
-int			draw_cell(t_cell cell, int y, int x)
+/**
+ * @brief		draw cell when cell filled
+ * @param		cell	draw source
+ * @param		y		draw coord y
+ * @param		x		draw coord x
+ * @return		true (draw success): 0 / false (draw failure): -1
+ */
+static int		draw_cell(t_cell cell, int y, int x)
 {
-	// if (check_range(cell, y, x) == -1)
-	// 	return -1;
-
 	// [ cell is filled ? ]
 	if (is_filled_cell(cell) == -1)
 		return -1;
 
-	// [ print cell ]
+	// [ draw cell ]
 	set_position(y, x);
 	set_char_color(cell.char_color);
 	set_back_color(cell.back_color);
@@ -39,38 +41,52 @@ int			draw_cell(t_cell cell, int y, int x)
 	return 0;
 }
 
-int			draw_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
+/**
+ * @brief		draw block
+ * @param		block	draw source
+ * @param		y		draw coord y
+ * @param		x		draw coord x
+ */
+void			draw_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
 {
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
 			draw_cell(block[i][j], y + i, x + j);
-
-	return 0;
 }
 
-void		draw_block_now(void)
+/**
+ * @brief	draw now block
+ */
+void			draw_block_now(void)
 {
 	draw_block(v.block_now, e.field_coord.y + v.now_y, e.field_coord.x + v.now_x);
 }
 
-void		draw_block_next(void)
+/**
+ * @brief	draw next1/next2 block
+ */
+void			draw_block_next(void)
 {
 	draw_block(v.block_next1, e.next1_coord.y, e.next1_coord.x);
 	draw_block(v.block_next2, e.next2_coord.y, e.next2_coord.x);
 }
 
-// -------------------------------------------------------------------------- //
-
-void		draw_field(void)
+/**
+ * @brief		draw game field
+ */
+void			draw_field(void)
 {
-	// draw screen
+	// [ draw game field ]
 	for (int i = 0; i < e.field_size.height; i++)
 		for (int j = 0; j < e.field_size.width; j++)
 			draw_cell(v.field[conv_field_coord(i, j)],
 						e.field_coord.y + i, e.field_coord.x + j);
 }
 
-void	draw_score(void)
+/**
+ * @brief		draw score
+ */
+void			draw_score(void)
 {
 	// [ draw score ]
 	set_char_color(CLR_WHITE);
@@ -87,9 +103,16 @@ void	draw_score(void)
 	return;	
 }
 
-// ========================================================================== //
+// -------------------------------------------------------------------------- //
 
-int			clear_cell(t_cell cell, int y, int x)
+/**
+ * @brief		clear cell when cell filled
+ * @param		cell	clear source
+ * @param		y		clear coord y
+ * @param		x		clear coord x
+ * @return		true (clear success): 0 / false (clear failure): -1
+ */
+static int		clear_cell(t_cell cell, int y, int x)
 {
 	// [ cell is filled ]
 	if (is_filled_cell(cell) == -1)
@@ -108,43 +131,44 @@ int			clear_cell(t_cell cell, int y, int x)
 	return 0;
 }
 
-void		clear_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
+/**
+ * @brief		clear block
+ * @param		block	clear source
+ * @param		y		clear coord y
+ * @param		x		clear coord x
+ */
+void			clear_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
 {
 	// [ clear block ]
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
 			clear_cell(block[i][j], y + i, x + j);
-
-	// [ return ]
-	return;
 }
 
-void		clear_block_prev(void)
+/**
+ * @brief		clear prev block (use when block move)
+ */
+void			clear_block_prev(void)
 {
 	// [ clear block_now ]
 	clear_block(v.block_now, e.field_coord.y + v.prev_y, e.field_coord.x + v.prev_x);
-
-	// [ return ]
-	return;
 }
 
-void		clear_block_now(void)
+/**
+ * @brief		clear now block
+ */
+void			clear_block_now(void)
 {
 	// [ clear block_now ]
 	clear_block(v.block_now, e.field_coord.y + v.now_y, e.field_coord.x + v.now_x);
-
-	// [ return ]
-	return;
 }
 
-void		clear_block_next(void)
+/**
+ * @brief		clear next1/next2 block
+ */
+void			clear_block_next(void)
 {
 	// [ clear block_next ]
 	clear_block(v.block_next1, e.next1_coord.y, e.next1_coord.x);
 	clear_block(v.block_next2, e.next2_coord.y, e.next2_coord.x);
-
-	// [ return ]
-	return;
 }
-
-// ========================================================================== //

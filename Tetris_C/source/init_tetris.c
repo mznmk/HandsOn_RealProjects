@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 10:56:39 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 11:56:44 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 00:58:35 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		handle_signal(int sig)
 
 /**
  * @brief		save terminal setting (termcap)
- * @return		status
+ * @return		true (success):0 / false (failure): -1
  */
 static int		init_term(void)
 {
@@ -55,8 +55,7 @@ static int		init_term(void)
 
 /**
  * @brief		initialize tetris
- * @return		none
- */
+  */
 void			init_tetris(int argc, char **argv)
 {
 	// [ initialize environment variables ]

@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 19:03:51 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 19:20:29 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 00:56:23 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ static void		draw_score_back(void)
 
 /**
  * @brief		draw_background
- * @return		none
  */
 void			draw_back(void)
 {

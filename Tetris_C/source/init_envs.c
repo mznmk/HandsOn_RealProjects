@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 12:48:55 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 12:51:44 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 00:57:33 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static void		set_field_size(int argc, char **argv)
  * @brief		set size (back/field/next/score)
 ** @param		argc	argument count
 ** @param		argv	argument contents
-** @return		none
  */
 static void		set_size(int argc, char **argv)
 {
@@ -100,7 +99,6 @@ static void		set_size(int argc, char **argv)
 
 /**
  * @brief		set coord (back/field/next/score/start)
-** @return		none
  */
 static void		set_coord(void)
 {
@@ -146,7 +144,6 @@ static void		set_param_fall_speed_up(int argc, char **argv)
  * @brief		set game parameter
 ** @param		argc	argument count
 ** @param		argv	argument contents
-** @return		none
  */
 static void		set_param(int argc, char **argv)
 {
@@ -169,7 +166,6 @@ static void		set_param(int argc, char **argv)
  * @brief		initialize environment variables
 ** @param		argc	argument count
 ** @param		argv	argument contents
-** @return		none
  */
 void			init_envs(int argc, char **argv)
 {

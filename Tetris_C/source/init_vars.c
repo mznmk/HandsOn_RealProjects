@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 03:59:19 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 03:56:55 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 00:59:09 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ static void	set_block_type(void)
 
 /*!
 ** @brief	initialize data container (block_type)
-** @return	none
 */
 static void		init_vars_block_type(void) 
 {
@@ -166,7 +165,6 @@ static void		init_vars_block_type(void)
 
 /*!
 ** @brief	initialize data container (field)
-** @return	none
 */
 static void		init_vars_field(void)
 {
@@ -186,7 +184,6 @@ static void		init_vars_field(void)
 
 /*!
 ** @brief	initialize data container
-** @return	none
 */
 void			init_vars(void)
 {

@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 05:38:47 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 19:18:17 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 01:01:42 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int				choose_random(int size)
 
 /**
  * @brief		set font color default
- * @return		none
  */
 void			set_font_color_default(void)
 {
@@ -40,7 +39,6 @@ void			set_font_color_default(void)
 
 /**
  * @brief		set font color basic
- * @return		none
  */
 void			set_font_color_basic(void)
 {

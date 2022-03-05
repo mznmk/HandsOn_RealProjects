@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 16:32:56 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 02:36:31 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 01:00:14 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ extern t_vars	v;
 
 /**
  * @brief 	allocate memory (field)
- * @return	none
  */
 void			allocate_memory(void)
 {
@@ -37,7 +36,6 @@ void			allocate_memory(void)
 
 /**
  * @brief	deallocate memory (field)
- * @return 	none
  */
 void			deallocate_memory(void)
 {
@@ -45,6 +43,8 @@ void			deallocate_memory(void)
 	if (v.field)
 		free(v.field);
 }
+
+// -------------------------------------------------------------------------- //
 
 /**
  * @brief	convert field coord (2D->1D)
