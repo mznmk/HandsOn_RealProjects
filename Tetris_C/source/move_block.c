@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 02:22:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 00:12:36 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 03:13:16 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,32 +45,6 @@ void		set_new_block_next(int type1, int type2)
 {
 	set_block(v.block_next1, v.block_type[type1]);
 	set_block(v.block_next2, v.block_type[type2]);
-}
-
-// -------------------------------------------------------------------------- //
-
-/**
- * @brief		judge collision
- * 
- * @param		block	to be judged
- * @param		y		block coord y
- * @param		x		block coord x
- * @return		true (no collision): 0 / false (collision): -1
- */
-int				judge_collision(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x)
-{
-	// [ judge collision ]
-	for (int i = 0; i < BLOCK_SIZE; i++)
-		for (int j = 0; j < BLOCK_SIZE; j++)
-		{
-			if (block[i][j].c == '\0')
-				continue;
-			else
-				if (check_cell(block[i][j], y + i, x + j))
-					return -1;
-		}
-	// [ return ]
-	return 0;
 }
 
 // -------------------------------------------------------------------------- //
@@ -119,7 +93,7 @@ void			fix_block_to_field(int y, int x)
 	// [ fix block to field ]
 	for (int i = 0; i < BLOCK_SIZE; i++)
 		for (int j = 0; j < BLOCK_SIZE; j++)
-		if (check_cell(v.block_now[i][j], y + i, x + j) == 0)
+		if (can_use_cell(v.block_now[i][j], y + i, x + j) == 0)
 			v.field[conv_field_coord(y+i, x+j)] = v.block_now[i][j];
 }
 
@@ -145,8 +119,7 @@ static void		erase_line(int y)
 	// [ erase line from bottom to top ]
 	for (int i = y; i > 0; i--)
 		for (int j = 0; j < e.field_size.width; j++)
-			v.field[conv_field_coord(i, j)]
-				= v.field[conv_field_coord(i-1, j)];
+			v.field[conv_field_coord(i, j)] = v.field[conv_field_coord(i-1, j)];
 	
 	// [ redraw screen ]
 	draw_back();

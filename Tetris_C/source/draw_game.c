@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 00:12:21 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 00:55:45 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 03:06:27 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void			draw_score(void)
 	// [ draw score ]
 	set_char_color(CLR_WHITE);
 	set_back_color(CLR_BLACK);
-		set_attribute(ATR_BLIGHT);
+	set_attribute(ATR_BLIGHT);
 	set_position(e.score_coord.y, e.score_coord.x);
-	printf("score");
+	printf("score   ");
 	set_position(e.score_coord.y + 1, e.score_coord.x);
 	printf("%8d", v.score);
 	fflush(stdout);

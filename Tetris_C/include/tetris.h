@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 00:51:41 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 03:10:55 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,15 +190,16 @@ int				conv_field_coord(int y, int x);
 int				choose_random(int size);
 void			set_font_color_default(void);
 void			set_font_color_basic(void);
+
+// judge.c
 int				is_filled_cell(t_cell cell);
-int	check_range(t_cell cell, int y, int x);
-int	check_cell(t_cell cell_self, int y, int x);
+int				can_use_cell(t_cell cell, int y, int x);
+int				judge_collision(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
 
 // draw_back.c
 void			draw_back(void);
 
 // draw_game.c
-
 void			draw_block(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
 void			draw_block_now(void);
 void			draw_block_next(void);
@@ -213,7 +214,6 @@ void			clear_block_next(void);
 void			set_new_block_now(int type);
 void			set_new_block_next(int type1, int type2);
 void			rotate_block(int y, int x, bool rotate_right);
-int				judge_collision(t_cell block[BLOCK_SIZE][BLOCK_SIZE], int y, int x);
 void			fix_block_to_field(int y, int x);
 void			erase_lines(void);
 
