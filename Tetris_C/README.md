@@ -37,6 +37,7 @@ git clone https://github.com/mznmk/HandsOn_Game.git
 
 2. ゲーム開始  
 	次のコマンドを実行すると、ゲームが始まります。  
+	（デフォルトの設定は、フィールド：ターミナルサイズ 速度：5 です。）
 	```sh
 	./tetris
 	```
@@ -52,7 +53,7 @@ git clone https://github.com/mznmk/HandsOn_Game.git
 	```
 
 3. ゲーム終了  
-	ゲーム中に `Ctrl + C` / `Ctrl + \` を入力すると、ゲームが終了します。  
+	ゲーム中に `Ctrl + C` または `Ctrl + \` を入力すると、ゲームが終了します。  
 
 ### 操作
 
@@ -67,7 +68,7 @@ git clone https://github.com/mznmk/HandsOn_Game.git
 |`→` / `d`            |ブロックが右に移動します|
 |`↓` / `s`            |ブロックが一気に落ちます|
 |`↑` / `w` / `0` / `j`|ブロックが左回転します　|
-|`.` / `k`             |ブロックが左回転します　|
+|`.` / `k`             |ブロックが右回転します　|
 
 ### アンインストール
 
