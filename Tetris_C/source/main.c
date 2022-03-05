@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 23:01:35 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 04:54:07 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 11:39:05 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,39 +30,6 @@ static int		choose_random_type(bool use_seed)
 
 	// [ return ]
 	return rnd;
-}
-
-// -------------------------------------------------------------------------- //
-
-static void		init_screen(void)
-{
-	// [ save terminal config (termcap) ]
-	tinit();
-
-	// [ set terminal config ]
-	set_back_color(CLR_BLACK);
-	set_char_color(CLR_WHITE);
-	set_attribute(ATR_NORMAL);
-	clear_terminal();
-	cursol_off();
-}
-
-// -------------------------------------------------------------------------- //
-
-static void		reset_screen(void)
-{
-	// [ reset terminal config ]
-	set_back_color(CLR_BLACK);
-	set_char_color(CLR_WHITE);
-	set_attribute(ATR_NORMAL);
-	clear_terminal();
-	cursol_on();
-
-	// [ load terminal config (termcap) ]
-	tfinal();
-
-	// [ deallocate memory ]
-	deallocate_memory();
 }
 
 // -------------------------------------------------------------------------- //
@@ -215,16 +182,14 @@ static void		game_loop(void)
 */
 int				main(int argc, char **argv)
 {
+	// [ initialize ]
+	init_tetris(argc, argv);
+
 	// [ execute tetris ]
-	// initialize tetris
-	init_envs(argc, argv);
-	allocate_memory();
-	init_vars();
-	init_screen();
-	// execute tetris
 	game_loop();
-	// finalize tetris
-	reset_screen();
+
+	// [ finalize ]
+	fin_tetris();
 
 	// [ return ]
 	return 0;
@@ -239,7 +204,7 @@ int				main(int argc, char **argv)
 void			exit_tetris(void)
 {
 	// [ finalize tetris ]
-	reset_screen();
+	fin_tetris();
 
 	// [ return (exit point) ]
 	exit(0);

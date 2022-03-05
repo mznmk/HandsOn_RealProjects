@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 22:10:11 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/05 04:57:52 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/05 11:37:40 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,14 +166,18 @@ t_vars			v;
 // io.c
 int				kbhit(void);
 unsigned long	getch(void);
-int				tinit(void);
-int				tfinal(void);
 
 // init_env.c
 void			init_envs(int argc, char **argv);
 
 // init_vars.c
 void			init_vars(void);
+
+// init_term.c
+void			init_tetris(int argc, char **argv);
+
+// fin_term.c
+void			fin_tetris(void);
 
 // memory.c
 void			allocate_memory(void);

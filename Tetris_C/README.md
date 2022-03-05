@@ -52,7 +52,7 @@ git clone https://github.com/mznmk/HandsOn_Game.git
 	```
 
 3. ゲーム終了  
-	ゲーム中に `Ctrl + C` を入力すると、ゲームが終了します。  
+	ゲーム中に `Ctrl + C` / `Ctrl + \` を入力すると、ゲームが終了します。  
 
 ### 操作方法
 
@@ -147,13 +147,16 @@ https://www.mm2d.net/main/prog/c/console-01.html
 https://qiita.com/hidetzu/items/2978f63e6d9b1848d8fe  
 
 
+select関数を用いた標準入力の監視【Linux / C言語】  
+https://zenn.dev/kedama_nth/articles/13a40615312460  
+
+C言語】Linuxでのkbhit関数（キーイベントの取得）  
+https://hotnews8.net/programming/tricky-code/c-code03  
+
+
 C言語でシグナルをハンドルする  
 https://qiita.com/supaiku2452/items/10772cbd2706dede06b9  
 
 Linux シグナルの基本と仕組み (カーネル v5.5 時点)   
 https://qiita.com/Kernel_OGSun/items/e96cef5487e25517a576  
-
-
-select関数を用いた標準入力の監視【Linux / C言語】  
-https://zenn.dev/kedama_nth/articles/13a40615312460  
 
