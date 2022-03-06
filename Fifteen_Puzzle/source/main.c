@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:38:57 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 19:38:31 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 20:42:24 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,54 @@ static int		can_swap_cell(int y, int x)
 	return 0;
 }
 
+void			press_key_up(void)
+{
+	if (can_swap_cell(v.black_coord.y - 1, v.black_coord.x) == 0)
+	{
+		// swap cell
+		swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
+					conv_grid_coord(v.black_coord.y - 1, v.black_coord.x));
+		// update block coord
+		v.black_coord.y -= 1;			
+	}
+}
+
+void			press_key_down(void)
+{
+	if (can_swap_cell(v.black_coord.y + 1, v.black_coord.x) == 0)
+	{
+		// swap cell
+		swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
+					conv_grid_coord(v.black_coord.y + 1, v.black_coord.x));
+		// update block coord
+		v.black_coord.y += 1;			
+	}
+}
+
+void			press_key_left(void)
+{
+	if (can_swap_cell(v.black_coord.y, v.black_coord.x - 1) == 0)
+	{
+		// swap cell
+		swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
+					conv_grid_coord(v.black_coord.y, v.black_coord.x - 1));
+		// update block coord
+		v.black_coord.x -= 1;			
+	}
+}
+
+void			press_key_right(void)
+{
+	if (can_swap_cell(v.black_coord.y, v.black_coord.x + 1) == 0)
+	{
+		// swap cell
+		swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
+					conv_grid_coord(v.black_coord.y, v.black_coord.x + 1));
+		// update block coord
+		v.black_coord.x += 1;			
+	}
+}
+
 /*!
 ** @brief	assign process, when key is pressed
 ** @param	keycode	pressed keycode
@@ -39,29 +87,13 @@ static int		can_swap_cell(int y, int x)
 static void		press_key(unsigned long keycode)
 {
 	if (keycode == KEY_ARROW_UP || keycode == 'w')
-	{
-		if (can_swap_cell(v.black_coord.y - 1, v.black_coord.x) == 0)
-			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
-						conv_grid_coord(v.black_coord.y - 1, v.black_coord.x));
-		}
+		press_key_up();
 	else if (keycode == KEY_ARROW_DOWN || keycode == 's')
-	{
-		if (can_swap_cell(v.black_coord.y + 1, v.black_coord.x) == 0)
-			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
-						conv_grid_coord(v.black_coord.y + 1, v.black_coord.x));
-	}
+		press_key_down();
 	else if (keycode == KEY_ARROW_LEFT || keycode == 'a')
-	{
-		if (can_swap_cell(v.black_coord.y, v.black_coord.x - 1) == 0)
-			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
-						conv_grid_coord(v.black_coord.y, v.black_coord.x - 1));
-	}
+		press_key_left();
 	else if (keycode == KEY_ARROW_RIGHT || keycode == 'd')
-	{
-		if (can_swap_cell(v.black_coord.y, v.black_coord.x + 1) == 0)
-			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
-						conv_grid_coord(v.black_coord.y, v.black_coord.x + 1));
-	}
+		press_key_right();
 }
 
 /*!
@@ -75,7 +107,6 @@ static void		game_loop(void)
 	// draw screen
 	draw_back();
 	set_number_to_grid();
-	find_blank_cell();
 	draw_number();
 	draw_stat();
 
@@ -89,7 +120,6 @@ static void		game_loop(void)
 			// move blank cell
 			press_key(keycode);
 			// draw screen
-			find_blank_cell();
 			draw_number();
 			draw_stat();
 		}
