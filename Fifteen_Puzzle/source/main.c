@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:38:57 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 15:58:49 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 16:24:55 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,13 @@ static void		game_loop(void)
 
 	// draw back
 	draw_back();
-	
+
+	// set number	
+	for (int i = 0; i < e.cell_size; i++)
+		v.grid[i] = (i + 1) % e.cell_size;
+
+	// draw number
+	draw_number();
 
 	// [ run main routine ]
 	while (42) {
