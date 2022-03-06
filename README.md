@@ -18,6 +18,6 @@
 
 ## Fifteen_Puzzle
 
-15Puzzle を作成中です！  
-[Tetris_C](https://github.com/mznmk/HandsOn_Game/tree/master/Tetris_C)  
+15Puzzle を作成しました！  
+[Fifteen_Puzzle](https://github.com/mznmk/HandsOn_Game/tree/master/Fifteen_Puzzle)  
 
