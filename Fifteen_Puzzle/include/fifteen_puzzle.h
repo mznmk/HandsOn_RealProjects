@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:50:58 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 16:22:59 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 16:58:55 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ void			init_envs(int argc, char **argv);
 // game.c
 void			draw_back(void);
 void			draw_number(void);
+void			swap_cell_at_random(void);
 
 // main.c
 void			exit_game(void);

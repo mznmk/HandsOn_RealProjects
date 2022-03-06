@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:11:12 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 16:24:18 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 16:58:37 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,29 @@ void			draw_number(void)
 // 		v.grid[i] = (i + 1) % e.cell_size;
 // }
 
-// static void		swap_cell(t_coord coord1, t_coord coord2)
+void			swap_cell(int coord_1d_1, int coord_1d_2)
+{
+	// [ swap cell ]
+	int		temp;
+	temp = v.grid[coord_1d_1];
+	v.grid[coord_1d_1] = v.grid[coord_1d_2];
+	v.grid[coord_1d_2] = temp;
+}
+
+void			swap_cell_at_random(void)
+{
+	int loop_times = e.cell_size * e.cell_size * e.cell_size;
+	int		rnd1;
+	int		rnd2;
+	for (int i = 0; i < loop_times; i++)
+	{
+		rnd1 = choose_random(e.cell_size);
+		rnd2 = choose_random(e.cell_size);
+		swap_cell(rnd1, rnd2);		
+	}
+}
+
+// void		can_swap_cell(int y, int x)
 // {
 
 // }
