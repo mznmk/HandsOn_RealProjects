@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:38:57 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 19:10:36 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 19:38:31 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,25 @@ static int		can_swap_cell(int y, int x)
 */
 static void		press_key(unsigned long keycode)
 {
-	if (keycode == KEY_ARROW_UP)
+	if (keycode == KEY_ARROW_UP || keycode == 'w')
 	{
 		if (can_swap_cell(v.black_coord.y - 1, v.black_coord.x) == 0)
 			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
 						conv_grid_coord(v.black_coord.y - 1, v.black_coord.x));
 		}
-	else if (keycode == KEY_ARROW_DOWN)
+	else if (keycode == KEY_ARROW_DOWN || keycode == 's')
 	{
 		if (can_swap_cell(v.black_coord.y + 1, v.black_coord.x) == 0)
 			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
 						conv_grid_coord(v.black_coord.y + 1, v.black_coord.x));
 	}
-	else if (keycode == KEY_ARROW_LEFT)
+	else if (keycode == KEY_ARROW_LEFT || keycode == 'a')
 	{
 		if (can_swap_cell(v.black_coord.y, v.black_coord.x - 1) == 0)
 			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
 						conv_grid_coord(v.black_coord.y, v.black_coord.x - 1));
 	}
-	else if (keycode == KEY_ARROW_RIGHT)
+	else if (keycode == KEY_ARROW_RIGHT || keycode == 'd')
 	{
 		if (can_swap_cell(v.black_coord.y, v.black_coord.x + 1) == 0)
 			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
