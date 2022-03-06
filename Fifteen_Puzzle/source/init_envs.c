@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:38:48 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 16:06:27 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 17:36:26 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ static void		set_size(int argc, char **argv)
 
 	// [ stat_size ]
 	e.stat_size.height = STAT_HEIGHT;
-	e.stat_size.width = e.grid_size.width * 2 + 1;
+	e.stat_size.width = e.grid_size.width * 2 - 1;
 
 	// [ back size ]
 	// height
 	e.back_size.height = e.grid_size.height * 2 + 1;
 	e.back_size.height += e.stat_size.height + 1;
 	// width
-	e.back_size.width = e.stat_size.width;
+	e.back_size.width = e.grid_size.width * 2 + 1;
 }
 
 /**
@@ -69,7 +69,7 @@ static void		set_coord(void)
 	e.grid_coord.x = 1;
 
 	// [ stat_coord ]
-	e.stat_coord.y = e.grid_coord.y + e.grid_size.height + 1;
+	e.stat_coord.y = e.grid_coord.y + e.grid_size.height * 2;
 	e.stat_coord.x = e.grid_coord.x;
 }
 

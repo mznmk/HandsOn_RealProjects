@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:50:58 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 16:58:55 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 18:01:35 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # define GRID_WIDTH					4
 # define GRID_COORD_Y				1
 # define STAT_HEIGHT				1
+
+# define BLANK_NUMBER				0
 
 // --------------------------------- color ---------------------------------- //
 
@@ -104,6 +106,7 @@ typedef struct		s_envs
 typedef struct		s_vars
 {
 	int				*grid;
+	t_coord			black_cell;
 }					t_vars;
 
 // ============================ global variable ============================= //
@@ -130,9 +133,16 @@ void			fin_game(void);
 // init_envs.c
 void			init_envs(int argc, char **argv);
 
+// utils.c
+int				conv_grid_coord(int y, int x);
+int				can_swap_cell(int y, int x);
+
 // game.c
 void			draw_back(void);
 void			draw_number(void);
+void			draw_stat(void);
+void			find_blank_cell(void);
+void			swap_cell(int coord_1d_1, int coord_1d_2);
 void			swap_cell_at_random(void);
 
 // main.c

@@ -6,20 +6,14 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:38:57 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 16:58:59 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 18:02:27 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fifteen_puzzle.h"
 
 extern t_envs	e;
-
-
-# define BOARD_WIDTH	4
-# define BOARD_HEIGHT	4
-
-int board[BOARD_HEIGHT][BOARD_WIDTH];
-
+extern t_vars	v;
 
 /*!
 ** @brief	assign process, when key is pressed
@@ -29,19 +23,27 @@ static void		press_key(unsigned long keycode)
 {
 	if (keycode == KEY_ARROW_UP)
 	{
-		printf("up!\n");
-	}
+		if (can_swap_cell(v.black_cell.y - 1, v.black_cell.x) == 0)
+			swap_cell(conv_grid_coord(v.black_cell.y, v.black_cell.x),
+						conv_grid_coord(v.black_cell.y - 1, v.black_cell.x));
+		}
 	else if (keycode == KEY_ARROW_DOWN)
 	{
-		printf("down!\n");
+		if (can_swap_cell(v.black_cell.y + 1, v.black_cell.x) == 0)
+			swap_cell(conv_grid_coord(v.black_cell.y, v.black_cell.x),
+						conv_grid_coord(v.black_cell.y + 1, v.black_cell.x));
 	}
 	else if (keycode == KEY_ARROW_LEFT)
 	{
-		printf("left!\n");
+		if (can_swap_cell(v.black_cell.y, v.black_cell.x - 1) == 0)
+			swap_cell(conv_grid_coord(v.black_cell.y, v.black_cell.x),
+						conv_grid_coord(v.black_cell.y, v.black_cell.x - 1));
 	}
 	else if (keycode == KEY_ARROW_RIGHT)
 	{
-		printf("right!\n");
+		if (can_swap_cell(v.black_cell.y, v.black_cell.x + 1) == 0)
+			swap_cell(conv_grid_coord(v.black_cell.y, v.black_cell.x),
+						conv_grid_coord(v.black_cell.y, v.black_cell.x + 1));
 	}
 }
 
@@ -60,9 +62,14 @@ static void		game_loop(void)
 	// swap at random
 	swap_cell_at_random();
 
+	// find blank cell
+	find_blank_cell();
+
 	// draw number
 	draw_number();
 
+	// draw_stat
+	draw_stat();
 
 	// [ run main routine ]
 	while (42) {
@@ -70,6 +77,11 @@ static void		game_loop(void)
 		{
 			keycode = getch();
 			press_key(keycode);
+
+			draw_number();
+
+			find_blank_cell();
+			draw_stat();
 		}
 
 	}
