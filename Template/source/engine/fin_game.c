@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:38:08 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 11:38:14 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 12:12:08 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 extern t_envs	e;
 
 /**
- * @brief 		save terminal setting (termcap)
+ * @brief 		load terminal setting (termcap)
  */
 static void		fin_term(void)
 {
-	// [ save terminal setting ]
+	// [ load terminal setting ]
 	tcsetattr(1, TCSADRAIN, &e.otty);
 	write(1, "\n", 1);
 }
