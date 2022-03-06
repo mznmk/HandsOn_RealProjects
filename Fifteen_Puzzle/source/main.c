@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:38:57 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 18:02:27 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 19:10:36 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,23 @@
 
 extern t_envs	e;
 extern t_vars	v;
+
+/**
+ * @brief		can swap cell (in range?)
+ * @param		y	cell coord y
+ * @param		x	cell coord x
+ * @return		true (can swap): 0 / false (cannot swap): -1
+ */
+static int		can_swap_cell(int y, int x)
+{
+	// [ can swap cell? ]
+	if (!(0 <= y && y < e.grid_size.height))
+		return -1;
+	if (!(0 <= x && x < e.grid_size.width))
+		return -1;
+	// [ return (true) ]
+	return 0;
+}
 
 /*!
 ** @brief	assign process, when key is pressed
@@ -23,67 +40,59 @@ static void		press_key(unsigned long keycode)
 {
 	if (keycode == KEY_ARROW_UP)
 	{
-		if (can_swap_cell(v.black_cell.y - 1, v.black_cell.x) == 0)
-			swap_cell(conv_grid_coord(v.black_cell.y, v.black_cell.x),
-						conv_grid_coord(v.black_cell.y - 1, v.black_cell.x));
+		if (can_swap_cell(v.black_coord.y - 1, v.black_coord.x) == 0)
+			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
+						conv_grid_coord(v.black_coord.y - 1, v.black_coord.x));
 		}
 	else if (keycode == KEY_ARROW_DOWN)
 	{
-		if (can_swap_cell(v.black_cell.y + 1, v.black_cell.x) == 0)
-			swap_cell(conv_grid_coord(v.black_cell.y, v.black_cell.x),
-						conv_grid_coord(v.black_cell.y + 1, v.black_cell.x));
+		if (can_swap_cell(v.black_coord.y + 1, v.black_coord.x) == 0)
+			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
+						conv_grid_coord(v.black_coord.y + 1, v.black_coord.x));
 	}
 	else if (keycode == KEY_ARROW_LEFT)
 	{
-		if (can_swap_cell(v.black_cell.y, v.black_cell.x - 1) == 0)
-			swap_cell(conv_grid_coord(v.black_cell.y, v.black_cell.x),
-						conv_grid_coord(v.black_cell.y, v.black_cell.x - 1));
+		if (can_swap_cell(v.black_coord.y, v.black_coord.x - 1) == 0)
+			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
+						conv_grid_coord(v.black_coord.y, v.black_coord.x - 1));
 	}
 	else if (keycode == KEY_ARROW_RIGHT)
 	{
-		if (can_swap_cell(v.black_cell.y, v.black_cell.x + 1) == 0)
-			swap_cell(conv_grid_coord(v.black_cell.y, v.black_cell.x),
-						conv_grid_coord(v.black_cell.y, v.black_cell.x + 1));
+		if (can_swap_cell(v.black_coord.y, v.black_coord.x + 1) == 0)
+			swap_cell(conv_grid_coord(v.black_coord.y, v.black_coord.x),
+						conv_grid_coord(v.black_coord.y, v.black_coord.x + 1));
 	}
 }
 
+/*!
+** @brief	game loop (15puzzle game loop)
+*/
 static void		game_loop(void)
 {
 	// [ declare variables ]
 	unsigned long	keycode;
 
-	// draw back
+	// draw screen
 	draw_back();
-
-	// set number	
-	for (int i = 0; i < e.cell_size; i++)
-		v.grid[i] = (i + 1) % e.cell_size;
-
-	// swap at random
-	swap_cell_at_random();
-
-	// find blank cell
+	set_number_to_grid();
 	find_blank_cell();
-
-	// draw number
 	draw_number();
-
-	// draw_stat
 	draw_stat();
 
 	// [ run main routine ]
 	while (42) {
+		// [ pressed key ? ]
 		if (kbhit())
 		{
+			// recieve keycode
 			keycode = getch();
+			// move blank cell
 			press_key(keycode);
-
-			draw_number();
-
+			// draw screen
 			find_blank_cell();
+			draw_number();
 			draw_stat();
 		}
-
 	}
 }
 

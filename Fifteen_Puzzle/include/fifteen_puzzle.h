@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:50:58 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 18:01:35 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 19:11:00 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 // ============================= const variable ============================= //
 
-# define GRID_SIZE_MIN				2
+# define GRID_SIZE_MIN				3
 # define GRID_SIZE_MAX				9
 # define GRID_HEIGHT				4
 # define GRID_WIDTH					4
@@ -106,7 +106,7 @@ typedef struct		s_envs
 typedef struct		s_vars
 {
 	int				*grid;
-	t_coord			black_cell;
+	t_coord			black_coord;
 }					t_vars;
 
 // ============================ global variable ============================= //
@@ -134,16 +134,16 @@ void			fin_game(void);
 void			init_envs(int argc, char **argv);
 
 // utils.c
-int				conv_grid_coord(int y, int x);
-int				can_swap_cell(int y, int x);
+// int				can_swap_cell(int y, int x);
 
 // game.c
+int				conv_grid_coord(int y, int x);
 void			draw_back(void);
 void			draw_number(void);
 void			draw_stat(void);
 void			find_blank_cell(void);
 void			swap_cell(int coord_1d_1, int coord_1d_2);
-void			swap_cell_at_random(void);
+void			set_number_to_grid(void);
 
 // main.c
 void			exit_game(void);
