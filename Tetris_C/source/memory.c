@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 16:32:56 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 01:00:14 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 19:09:24 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void			allocate_memory(void)
 	int			size;
 
 	// [ allocate memory ]
+	v.field = NULL;
 	// allocate memory
 	size = e.field_size.height * e.field_size.width;
 	field = (t_cell *)malloc(sizeof(t_cell) * size);
@@ -50,7 +51,7 @@ void			deallocate_memory(void)
  * @brief	convert field coord (2D->1D)
  * @param	y		coord y
  * @param	x		coord x
- * @return	field index
+ * @return			field index
  */
 int				conv_field_coord(int y, int x)
 {
