@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:50:58 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 11:51:14 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 16:01:30 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <sys/select.h>
 # include <unistd.h>
 # include <stdlib.h>
-
 # include <stdio.h>
+# include <time.h>
 
 // ================================== macro ================================= //
 
@@ -35,7 +35,12 @@
 
 // ============================= const variable ============================= //
 
-
+# define GRID_SIZE_MIN				2
+# define GRID_SIZE_MAX				9
+# define GRID_HEIGHT				4
+# define GRID_WIDTH					4
+# define GRID_COORD_Y				1
+# define STAT_HEIGHT				1
 
 // --------------------------------- color ---------------------------------- //
 
@@ -69,16 +74,42 @@
 
 // ================================= struct ================================= //
 
+typedef struct		s_coord
+{
+	int				x;
+	int				y;
+}					t_coord;
+
+typedef struct		s_size
+{
+	int				height;
+	int				width;
+}					t_size;
+
+// -------------------------------------------------------------------------- //
+
 typedef struct		s_envs
 {
+	t_size			grid_size;
+	t_size			back_size;
+	t_size			stat_size;
+	t_coord			grid_coord;
+	t_coord			back_coord;
+	t_coord			stat_coord;
+	int				cell_size;
 	struct termios	otty;
 	struct termios	ntty;
 }					t_envs;
 
+typedef struct		s_vars
+{
+	int				*grid;
+}					t_vars;
 
 // ============================ global variable ============================= //
 
 t_envs			e;
+t_vars			v;
 
 // ========================= prototype declaration ========================== //
 
@@ -99,6 +130,8 @@ void			fin_game(void);
 // init_envs.c
 void			init_envs(int argc, char **argv);
 
+// game.c
+void			draw_back(void);
 
 // main.c
 void			exit_game(void);

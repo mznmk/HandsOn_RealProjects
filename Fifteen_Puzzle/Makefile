@@ -6,7 +6,7 @@
 #    By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 11:37:57 by mmizuno           #+#    #+#              #
-#    Updated: 2022/03/06 11:52:57 by mmizuno          ###   ########.fr        #
+#    Updated: 2022/03/06 16:02:34 by mmizuno          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ PUZZLE_SRCNAME		= engine/io.c \
 					  init_envs.c \
 					  engine/init_game.c \
 					  engine/fin_game.c \
+					  game.c \
 					  main.c
 PUZZLE_SRCS			= $(addprefix $(PUZZLE_SRCDIR), $(PUZZLE_SRCNAME))
 PUZZLE_OBJS			= $(PUZZLE_SRCS:.c=.o)

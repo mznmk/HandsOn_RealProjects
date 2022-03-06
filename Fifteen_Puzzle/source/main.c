@@ -6,13 +6,20 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:38:57 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 11:54:55 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 15:58:49 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fifteen_puzzle.h"
 
 extern t_envs	e;
+
+
+# define BOARD_WIDTH	4
+# define BOARD_HEIGHT	4
+
+int board[BOARD_HEIGHT][BOARD_WIDTH];
+
 
 /*!
 ** @brief	assign process, when key is pressed
@@ -43,6 +50,10 @@ static void		game_loop(void)
 	// [ declare variables ]
 	unsigned long	keycode;
 
+	// draw back
+	draw_back();
+	
+
 	// [ run main routine ]
 	while (42) {
 		if (kbhit())
@@ -50,6 +61,19 @@ static void		game_loop(void)
 			keycode = getch();
 			press_key(keycode);
 		}
+
+		// for (int y = 0; y < BOARD_HEIGHT; y++)
+		// 	for (int x = 0; x < BOARD_WIDTH; x++)
+		// 		board[y][x] = y * BOARD_HEIGHT + x;
+
+		// for (int y = 0; y < BOARD_HEIGHT; y++)
+		// 	for (int x = 0; x < BOARD_WIDTH; x++)
+		// 	{
+		// 		set_position(y, x*2);
+		// 		printf("%2d", board[y][x]);
+		// 	}
+
+
 	}
 }
 

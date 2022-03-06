@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:38:23 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/06 11:54:51 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/06 15:48:34 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,7 @@ void			init_game(int argc, char **argv)
 	set_attribute(ATR_NORMAL);
 	clear_terminal();
 	cursol_off();
+
+	// [ create random number ]
+	srand((unsigned int)time(NULL));
 }
