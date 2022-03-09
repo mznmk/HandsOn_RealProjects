@@ -1,5 +1,9 @@
 # Fifteen_Puzzle
 
+
+[![](https://img.youtube.com/vi/nXcbgF1EvMY/0.jpg)](https://www.youtube.com/watch?v=nXcbgF1EvMY)  
+
+
 15パズルを小一時間で作ってみた のハンズオンに挑戦してみました。  
 
 開発環境は `Ubuntu Server 20.04` です。  
