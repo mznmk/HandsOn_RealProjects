@@ -11,7 +11,7 @@
 
 ## Tetris_C
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/I9F0s53NW68" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
+[![](https://img.youtube.com/vi/I9F0s53NW68/0.jpg)](https://www.youtube.com/watch?v=I9F0s53NW68)
 
 テトリス を作成しました！  
 [Tetris_C](https://github.com/mznmk/HandsOn_Game/tree/master/Tetris_C)  
@@ -19,8 +19,8 @@
 
 ## Fifteen_Puzzle
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/nXcbgF1EvMY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
-
+[![](https://img.youtube.com/vi/nXcbgF1EvMY/0.jpg)](https://www.youtube.com/watch?v=nXcbgF1EvMY)
 15Puzzle を作成しました！  
+
 [Fifteen_Puzzle](https://github.com/mznmk/HandsOn_Game/tree/master/Fifteen_Puzzle)  
 
