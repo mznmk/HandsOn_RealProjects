@@ -1,5 +1,9 @@
 # Tetris_C
 
+
+[![](https://img.youtube.com/vi/I9F0s53NW68/0.jpg)](https://www.youtube.com/watch?v=I9F0s53NW68)  
+
+
 テトリスを作ろう のハンズオンに挑戦してみました。  
 
 開発環境は `Ubuntu Server 20.04` です。  
