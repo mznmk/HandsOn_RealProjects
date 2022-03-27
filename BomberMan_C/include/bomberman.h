@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 10:29:07 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/27 17:31:23 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/27 20:59:55 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <stdlib.h>
 
 # include <stdio.h>
+# include <time.h>
+# include <stdbool.h>
 
 // ================================== macro ================================= //
 
@@ -38,6 +40,15 @@
 # define MAP_HEIGHT					13
 # define MAP_WIDTH					31
 # define SCREEN_WIDTH				16
+
+# define PLAYER_Y					1
+# define PLAYER_X					1
+# define PLAYER_LIFE				1
+# define ENEMY_COUNT				5
+# define ENEMY_LIFE					1
+# define SOFTBLOCK_COUNT			20
+# define SOFTBLOCK_LIFE				1
+# define DOOR_LIFE					1
 
 // --------------------------------- color ---------------------------------- //
 
@@ -79,9 +90,23 @@ enum				e_status
 	GAME_OVER
 };
 
+enum				e_field
+{
+	FIELD,
+	HARD_BLOCK,
+	SOFT_BLOCK
+};
+
 // ================================= struct ================================= //
 
 // --------------------------------- helper --------------------------------- //
+
+typedef struct		s_chara
+{
+	int				x;
+	int				y;
+	int				life;
+}					t_chara;
 
 
 
@@ -95,14 +120,19 @@ typedef struct		s_envs
 
 typedef struct		s_vars
 {
+	int				map[MAP_HEIGHT][MAP_WIDTH];
+	t_chara			player;
+	t_chara			enemy[ENEMY_COUNT];
+	t_chara			softblock[SOFTBLOCK_COUNT];
+	t_chara			door;
 	int				status;
 }					t_vars;
 
 
 // ============================ global variable ============================= //
 
-t_envs			e;
-t_vars			v;
+t_envs				e;
+t_vars				v;
 
 // ========================= prototype declaration ========================== //
 
@@ -114,15 +144,29 @@ unsigned long	getch(void);
 void			allocate_memory(void);
 void			deallocate_memory(void);
 
+// collision.c
+bool			is_in_map(int y, int x);
+bool			is_hard_block(int y, int x);
+bool			is_player(int y, int x);
+bool			is_enemy(int y, int x);
+bool			is_softblock(int y, int x);
+bool			is_door(int y, int x);
+
+// init_envs.c
+void			init_envs(int argc, char **argv);
+
+// init_vars.c
+void			init_vars(void);
+
 // init_game.c
 void			init_game(int argc, char **argv);
 
 // fin_game.c
 void			fin_game(void);
 
-// init_envs.c
-void			init_envs(int argc, char **argv);
-
+// draw_back.c
+void			draw_back(void);
+void			draw_chara(void);
 
 // main.c
 void			exit_game(void);

@@ -6,13 +6,13 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:38:57 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/27 17:15:16 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/27 20:27:29 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/bomberman.h"
 
-extern t_envs	e;
+extern t_vars		v;
 
 /*!
 ** @brief	assign process, when key is pressed
@@ -42,6 +42,11 @@ static void		game_loop(void)
 {
 	// [ declare variables ]
 	unsigned long	keycode;
+
+	// draw back
+	clear_terminal();
+	draw_back();
+	draw_chara();
 
 	// [ run main routine ]
 	while (42) {

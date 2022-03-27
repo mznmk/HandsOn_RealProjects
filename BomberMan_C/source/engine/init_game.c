@@ -6,13 +6,13 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 11:38:23 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/03/27 17:15:15 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/03/27 19:34:11 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/bomberman.h"
 
-extern t_envs	e;
+extern t_envs		e;
 
 /**
  * @brief		attach event to signal
@@ -65,6 +65,7 @@ void			init_game(int argc, char **argv)
 	allocate_memory();
 
 	// [ initialize game variables ]
+	init_vars();
 		
 	// [ save terminal config (termcap) ]
 	if (init_term() != 0)
@@ -82,4 +83,7 @@ void			init_game(int argc, char **argv)
 	set_attribute(ATR_NORMAL);
 	clear_terminal();
 	cursol_off();
+
+	// [ create random number ]
+	srand((unsigned int)time(NULL));
 }

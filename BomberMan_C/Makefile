@@ -6,7 +6,7 @@
 #    By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 11:37:57 by mmizuno           #+#    #+#              #
-#    Updated: 2022/03/27 17:29:46 by mmizuno          ###   ########.fr        #
+#    Updated: 2022/03/27 19:53:51 by mmizuno          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,12 @@ TEMPLATE_INCDIR		= $(TEMPLATE_DIR)include/
 TEMPLATE_SRCDIR		= $(TEMPLATE_DIR)source/
 TEMPLATE_SRCNAME	= engine/io.c \
 					  memory.c \
+					  collision.c \
 					  init_envs.c \
+					  init_vars.c \
 					  engine/init_game.c \
 					  engine/fin_game.c \
+					  draw_back.c \
 					  main.c
 TEMPLATE_SRCS		= $(addprefix $(TEMPLATE_SRCDIR), $(TEMPLATE_SRCNAME))
 TEMPLATE_OBJS		= $(TEMPLATE_SRCS:.c=.o)
