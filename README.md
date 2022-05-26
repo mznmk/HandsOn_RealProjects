@@ -1,6 +1,6 @@
 # HandsOn RealProjects
 
-いろんなハンズオンに取り組みながら、プロジェクトを作成してみようという試みです。  
+いろんなハンズオンに取り組みながら、実際にプロジェクトを作成してみようという試みです。  
 
 
 ## Template
@@ -26,14 +26,13 @@ C で 15Puzzle を作成しました！
 [![](https://img.youtube.com/vi/nXcbgF1EvMY/0.jpg)](https://www.youtube.com/watch?v=nXcbgF1EvMY)  
 
 
----
-
-
 ## ZTM JS Web Projects
 
 [JavaScript Web Projects: 20 Projects to Build Your Portfolio](./ZTM_JS_Web/)  
 
-JavaScript で Pong を作成しました。  
+JavaScript で Pong を作成しました！  
+[![](https://img.youtube.com/vi/zwcM74tM-DY/0.jpg)](https://www.youtube.com/watch?v=zwcM74tM-DY)  
+
 
 ## LS JS Game Projects
 
