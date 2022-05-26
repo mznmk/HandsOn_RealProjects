@@ -1,26 +1,46 @@
-# HandsOn Game
+# HandsOn RealProjects
 
-いろんなハンズオンに取り組みながら、ゲームプログラミングを学習しようという試みです。  
+いろんなハンズオンに取り組みながら、プロジェクトを作成してみようという試みです。  
 
 
 ## Template
 
+[Template](https://github.com/mznmk/HandsOn_RealProjects/tree/master/Template)  
 ターミナルでゲームを動作させるためのエンジン部分 を作成しました！  
-[Template](https://github.com/mznmk/HandsOn_Game/tree/master/Template)  
+…が、1秒間に60フレーム動かすような普通のゲームだとチラついてしまいます…( TДT)。  
 
 
 ## Tetris_C
 
-[![](https://img.youtube.com/vi/I9F0s53NW68/0.jpg)](https://www.youtube.com/watch?v=I9F0s53NW68)
+[Tetris_C](./Tetris_C/)  
 
-テトリス を作成しました！  
-[Tetris_C](https://github.com/mznmk/HandsOn_Game/tree/master/Tetris_C)  
+C で テトリス を作成しました！  
+[![](https://img.youtube.com/vi/I9F0s53NW68/0.jpg)](https://www.youtube.com/watch?v=I9F0s53NW68)
 
 
 ## Fifteen_Puzzle
 
-[![](https://img.youtube.com/vi/nXcbgF1EvMY/0.jpg)](https://www.youtube.com/watch?v=nXcbgF1EvMY)
-15Puzzle を作成しました！  
+[Fifteen_Puzzle](./Fifteen_Puzzle/)  
 
-[Fifteen_Puzzle](https://github.com/mznmk/HandsOn_Game/tree/master/Fifteen_Puzzle)  
+C で 15Puzzle を作成しました！  
+[![](https://img.youtube.com/vi/nXcbgF1EvMY/0.jpg)](https://www.youtube.com/watch?v=nXcbgF1EvMY)  
+
+
+---
+
+
+## ZTM JS Web Projects
+
+[JavaScript Web Projects: 20 Projects to Build Your Portfolio](./ZTM_JS_Web/)  
+
+JavaScript で Pong を作成しました。  
+
+## LS JS Game Projects
+
+[Complete JavaScript Projects Course Games 55 Modern JS DOM](./LS_JS_Game/)  
+
+
+## BTM 20 JS Web Projetcts
+
+[20 Web Projects With Vanilla JavaScript](./BTM_JS_Web/)  
 
